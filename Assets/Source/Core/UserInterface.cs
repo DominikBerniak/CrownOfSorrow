@@ -78,8 +78,11 @@ namespace Assets.Source.Core
         {
             PauseControl.Singleton.PauseGame();
             equipmentUi.SetActive(true);
-            equipmentUi.GetComponentInChildren<TextMeshProUGUI>().text = "Inventory";
-            EquipmentManager.Singleton.SpawnItems(equipment);
+            equipmentUi.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            foreach (var item in equipment)
+            {
+                equipmentUi.GetComponentInChildren<TextMeshProUGUI>().text += item.Name + "\n";
+            }
         }
 
         public void HideEquipment()

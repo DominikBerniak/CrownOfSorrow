@@ -16,8 +16,6 @@ namespace DungeonCrawl.Actors.Characters
 
         public void ShowEquipment()
         {
-            Items.Add(new Item());
-            Items[0].Name = "Cos";
             IsEquipmentOnScreen = true;
             UserInterface.Singleton.ShowEquipment(Items);
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using Assets.Source.Core;
-using DungeonCrawl.Core;
+﻿using DungeonCrawl.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
@@ -17,6 +15,7 @@ namespace DungeonCrawl.Actors.Characters
             Health = 100;
             AttackDmg = 5;
         }
+
         protected override void OnUpdate(float deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.I))

@@ -32,6 +32,11 @@ namespace DungeonCrawl.Actors
             OnUpdate(Time.deltaTime);
         }
 
+        public void SetSpriteVisible(bool isVisible)
+        {
+            _spriteRenderer.enabled = isVisible;
+        }
+
         public virtual void SetSprite(int id)
         {
             _spriteRenderer.sprite = ActorManager.Singleton.GetSprite(id);

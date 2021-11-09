@@ -59,6 +59,10 @@
      <Compile Include="Assets\Source\Actors\Equipment\Item.cs" />
      <Compile Include="Assets\Source\Core\PauseControl.cs" />
      <Compile Include="Assets\Source\Core\EquipmentManager.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Armor.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\FunctionalItem.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Weapon.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Consumable.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
