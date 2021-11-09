@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.Source.Core;
 using DungeonCrawl.Core;
 using UnityEngine;
 
@@ -18,7 +19,23 @@ namespace DungeonCrawl.Actors.Characters
         }
         protected override void OnUpdate(float deltaTime)
         {
-            // _timeSinceLastMove += deltaTime;
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                // Show / hide equipment
+                if (Equipment.IsEquipmentOnScreen)
+                {
+                    Equipment.HideEquipment();    
+                }
+                else
+                {
+                    Equipment.ShowEquipment();    
+                }
+            }
+            if (PauseControl.Singleton.IsGamePaused)
+            {
+                return;
+            }
+            _timeSinceLastMove += deltaTime;
             // if (!_isMoving && Input.GetMouseButtonDown(0))
             // {
             //     _isMoving = true;

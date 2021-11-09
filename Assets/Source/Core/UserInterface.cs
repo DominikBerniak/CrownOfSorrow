@@ -1,4 +1,8 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using DungeonCrawl.Actors.Characters;
+using DungeonCrawl.Core;
+using Source.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +31,9 @@ namespace Assets.Source.Core
         /// </summary>
         public static UserInterface Singleton { get; private set; }
 
-        public GameObject fightScreen;
+        public GameObject fightUi;
+
+        public GameObject equipmentUi;
         
         private TextMeshProUGUI[] _textComponents;
         
@@ -57,14 +63,29 @@ namespace Assets.Source.Core
 
         public void ShowFightScreen(string monsterName)
         {
-            fightScreen.SetActive(true);
-            var text = fightScreen.GetComponentInChildren<TextMeshProUGUI>().text = $"It's a {monsterName}!";
+            PauseControl.Singleton.PauseGame();
+            fightUi.SetActive(true);
+            fightUi.GetComponentInChildren<TextMeshProUGUI>().text = $"It's a {monsterName}!";
         }
 
         public void HideFightScreen()
         {
-            fightScreen.SetActive(false);
-            
+            PauseControl.Singleton.ResumeGame();
+            fightUi.SetActive(false);
+        }
+
+        public void ShowEquipment(List<Item> equipment)
+        {
+            PauseControl.Singleton.PauseGame();
+            equipmentUi.SetActive(true);
+            equipmentUi.GetComponentInChildren<TextMeshProUGUI>().text = "Inventory";
+            EquipmentManager.Singleton.SpawnItems(equipment);
+        }
+
+        public void HideEquipment()
+        {
+            PauseControl.Singleton.ResumeGame();
+            equipmentUi.SetActive(false);
         }
     }
 }

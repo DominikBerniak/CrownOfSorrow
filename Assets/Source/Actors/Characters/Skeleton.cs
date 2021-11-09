@@ -14,8 +14,9 @@ namespace DungeonCrawl.Actors.Characters
         {
             if (anotherActor is Player)
             {
+                Player player = (Player) anotherActor;
                 UserInterface.Singleton.ShowFightScreen("Skeleton");
-                ApplyDamage(anotherActor.AttackDmg);
+                ApplyDamage(player.AttackDmg);
                 return Health <= 0;
             }
 
