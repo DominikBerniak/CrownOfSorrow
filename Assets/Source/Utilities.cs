@@ -7,11 +7,13 @@ namespace DungeonCrawl
         Up,
         Down,
         Left,
-        Right
+        Right,
+        None
     }
 
     public static class Utilities
     {
+        public static Random Random = new Random();
         public static (int x, int y) ToVector(this Direction dir)
         {
             switch (dir)

@@ -15,6 +15,10 @@ namespace DungeonCrawl.Actors
             }
         }
 
+        public int Health { get; set; }
+        
+        public int AttackDmg { get; set; }
+
         private (int x, int y) _position;
         private SpriteRenderer _spriteRenderer;
 
@@ -23,6 +27,7 @@ namespace DungeonCrawl.Actors
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
             SetSprite(DefaultSpriteId);
+            gameObject.layer = 6;
         }
 
         private void Update()
@@ -47,13 +52,10 @@ namespace DungeonCrawl.Actors
                 // No obstacle found, just move
                 Position = targetPosition;
             }
-            else
+            else if (actorAtTargetPosition.OnCollision(this))
             {
-                if (actorAtTargetPosition.OnCollision(this))
-                {
-                    // Allowed to move
-                    Position = targetPosition;
-                }
+                // Allowed to move
+                Position = targetPosition;
             }
         }
 
@@ -66,7 +68,7 @@ namespace DungeonCrawl.Actors
         public virtual bool OnCollision(Actor anotherActor)
         {
             // All actors are passable by default
-            return true;
+            return false;
         }
 
         /// <summary>

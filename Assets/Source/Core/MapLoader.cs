@@ -11,13 +11,14 @@ namespace DungeonCrawl.Core
     /// </summary>
     public static class MapLoader
     {
+        public static int CurrentMapId { get; set; } = 1;
         /// <summary>
         ///     Constructs map from txt file and spawns actors at appropriate positions
         /// </summary>
-        /// <param name="id"></param>
-        public static void LoadMap(int id)
+        public static void LoadMap()
         {
-            var lines = Regex.Split(Resources.Load<TextAsset>($"map_{id}").text, "\r\n|\r|\n");
+            ActorManager.Singleton.DestroyAllActorsExceptPlayer();
+            var lines = Regex.Split(Resources.Load<TextAsset>($"map_{CurrentMapId}").text, "\r\n|\r|\n");
 
             // Read map size from the first line
             var split = lines[0].Split(' ');
@@ -37,8 +38,8 @@ namespace DungeonCrawl.Core
             }
 
             // Set default camera size and position
-            CameraController.Singleton.Size = 10;
-            CameraController.Singleton.Position = (width / 2, -height / 2);
+            CameraController.Singleton.Size = 6;
+            // CameraController.Singleton.Position = (width / 2, -height / 2);
         }
 
         private static void SpawnActor(char c, (int x, int y) position)
@@ -60,6 +61,9 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
                 case ' ':
+                    break;
+                case '=':
+                    ActorManager.Singleton.Spawn<Door>(position);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

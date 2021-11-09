@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DungeonCrawl.Actors;
+using DungeonCrawl.Actors.Characters;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -67,12 +68,17 @@ namespace DungeonCrawl.Core
         /// <summary>
         ///     Used for cleaning up the scene before loading a new map
         /// </summary>
-        public void DestroyAllActors()
+        public void DestroyAllActorsExceptPlayer()
         {
             var actors = _allActors.ToArray();
 
             foreach (var actor in actors)
-                DestroyActor(actor);
+            {
+                if (!(actor is Player))
+                {
+                    DestroyActor(actor);
+                }    
+            }
         }
 
         /// <summary>
@@ -114,9 +120,8 @@ namespace DungeonCrawl.Core
 
             go.name = actorName ?? component.DefaultName;
             component.Position = (x, y);
-
             _allActors.Add(component);
-
+            
             return component;
         }
     }

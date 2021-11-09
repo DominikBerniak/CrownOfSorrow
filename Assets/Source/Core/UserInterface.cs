@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Source.Core
 {
@@ -26,7 +27,10 @@ namespace Assets.Source.Core
         /// </summary>
         public static UserInterface Singleton { get; private set; }
 
+        public GameObject fightScreen;
+        
         private TextMeshProUGUI[] _textComponents;
+        
 
         private void Awake()
         {
@@ -49,6 +53,18 @@ namespace Assets.Source.Core
         public void SetText(string text, TextPosition textPosition)
         {
             _textComponents[(int) textPosition].text = text;
+        }
+
+        public void ShowFightScreen(string monsterName)
+        {
+            fightScreen.SetActive(true);
+            var text = fightScreen.GetComponentInChildren<TextMeshProUGUI>().text = $"It's a {monsterName}!";
+        }
+
+        public void HideFightScreen()
+        {
+            fightScreen.SetActive(false);
+            
         }
     }
 }
