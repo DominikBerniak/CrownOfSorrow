@@ -1,7 +1,10 @@
-﻿namespace DungeonCrawl.Actors.Characters
+﻿using System.Security.Cryptography;
+
+namespace DungeonCrawl.Actors.Characters
 {
-    public class Item
+    public abstract class Item
     {
-        public string Name { get; set; }
+        public abstract void UseItem(Player player, int utility);
+
     }
 }

@@ -19,6 +19,8 @@ namespace DungeonCrawl.Actors
         public int Health { get; set; }
         
         public int AttackDmg { get; set; }
+        
+        public int Armor { get; set;  }
 
         private (int x, int y) _position;
         private SpriteRenderer _spriteRenderer;
