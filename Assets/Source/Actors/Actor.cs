@@ -1,4 +1,5 @@
-﻿using DungeonCrawl.Core;
+﻿using System.Collections.Generic;
+using DungeonCrawl.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors
@@ -21,7 +22,7 @@ namespace DungeonCrawl.Actors
 
         private (int x, int y) _position;
         private SpriteRenderer _spriteRenderer;
-
+        
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -35,10 +36,16 @@ namespace DungeonCrawl.Actors
             OnUpdate(Time.deltaTime);
         }
 
-        public void SetSprite(int id)
+        public virtual void SetSprite(int id)
         {
             _spriteRenderer.sprite = ActorManager.Singleton.GetSprite(id);
         }
+        
+        public virtual void SetSprite(Dictionary<string, int> variants, string key)
+        {
+            _spriteRenderer.sprite = ActorManager.Singleton.GetSprite(variants[key]);
+        }
+
 
         public void TryMove(Direction direction)
         {

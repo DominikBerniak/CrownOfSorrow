@@ -47,7 +47,10 @@ namespace DungeonCrawl.Core
             switch (c)
             {
                 case '#':
-                    ActorManager.Singleton.Spawn<Wall>(position);
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "wall", String.Empty);
+                    break;
+                case '~':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "water", String.Empty);
                     break;
                 case '.':
                     ActorManager.Singleton.Spawn<Floor>(position);

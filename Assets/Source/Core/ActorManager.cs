@@ -2,6 +2,7 @@
 using System.Linq;
 using DungeonCrawl.Actors;
 using DungeonCrawl.Actors.Characters;
+using DungeonCrawl.Actors.Static;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -118,6 +119,20 @@ namespace DungeonCrawl.Core
 
             var component = go.AddComponent<T>();
 
+            go.name = actorName ?? component.DefaultName;
+            component.Position = (x, y);
+            _allActors.Add(component);
+            
+            return component;
+        }
+        
+        public T Spawn<T>(int x, int y, string variantName, string actorName = null) where T : Wall
+        {
+            var go = new GameObject();
+            go.AddComponent<SpriteRenderer>();
+
+            var component = go.AddComponent<T>();
+            component.SetSprite(component.SpriteVariants, variantName);
             go.name = actorName ?? component.DefaultName;
             component.Position = (x, y);
             _allActors.Add(component);

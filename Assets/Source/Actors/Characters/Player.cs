@@ -93,5 +93,9 @@ namespace DungeonCrawl.Actors.Characters
 
         public override int DefaultSpriteId => 47;
         public override string DefaultName => "Player";
+
+        public void Dupa()
+        {
+        }
     }
 }

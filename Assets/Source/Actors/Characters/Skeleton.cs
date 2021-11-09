@@ -22,7 +22,7 @@ namespace DungeonCrawl.Actors.Characters
             return false;
         }
 
-        protected override void OnDeath()
+       protected override void OnDeath()
         {
             Debug.Log("Well, I was already dead anyway...");
         }

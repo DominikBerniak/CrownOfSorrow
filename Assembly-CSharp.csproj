@@ -55,7 +55,8 @@
      <Compile Include="Assets\Source\Core\GameManager.cs" />
      <Compile Include="Assets\Source\Core\ActorManager.cs" />
      <Compile Include="Assets\Source\Core\Menu.cs" />
-     <Compile Include="Assets\Source\Actors\Characters\Equipment.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Equipment.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Item.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
