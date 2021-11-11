@@ -2,6 +2,8 @@
 using DungeonCrawl.Actors.Static;
 using System;
 using System.Text.RegularExpressions;
+using DungeonCrawl.Actors;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 
 namespace DungeonCrawl.Core
@@ -232,7 +234,12 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Armor>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
-                
+                case ',':
+                    ActorManager.Singleton.Spawn<Ghost>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

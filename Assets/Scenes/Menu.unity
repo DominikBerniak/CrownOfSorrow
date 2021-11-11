@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 229189061}
   - component: {fileID: 229189060}
   m_Layer: 5
-  m_Name: Text
+  m_Name: UserNameInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1414,7 +1414,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -11.9, y: 49}
-  m_SizeDelta: {x: 376.53, y: 58.59}
+  m_SizeDelta: {x: 249.26, y: 58.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1504100852
 MonoBehaviour:
@@ -1474,7 +1474,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 20
+  m_CharacterLimit: 11
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []

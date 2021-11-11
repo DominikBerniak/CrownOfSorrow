@@ -6,12 +6,19 @@ namespace DungeonCrawl.Actors.Characters
     {
         private List<string> Names = new List<string>()
         {
+
             "dupa", "dupa2", "dupa3"
         };
-        
+
+        public Consumable()
+        {
+            StatName = "Health+";
+            StatPower = 5;
+        }
         public override void UseItem()
         {
-            //Owner.Health += health;
+            Owner.CurrentHealth += StatPower;
+            Owner.Equipment.RemoveItem(this);
         }
         
         public override int DefaultSpriteId => 120;

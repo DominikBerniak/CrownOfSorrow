@@ -7,7 +7,6 @@ namespace DungeonCrawl.Actors.Characters
     {
         public string Name { get; set; }
         public int MaxHealth { get; set; }
-        
         public int CurrentHealth { get; set; }
         public int AttackDmg { get; set; }
         public int Armor { get; set; }
@@ -19,9 +18,9 @@ namespace DungeonCrawl.Actors.Characters
 
         public void ApplyDamage(int damage)
         {
-            MaxHealth -= damage;
+            CurrentHealth -= damage;
 
-            if (MaxHealth <= 0)
+            if (CurrentHealth <= 0)
             {
                 // Die
                 OnDeath();

@@ -26,13 +26,11 @@ namespace DungeonCrawl.Core
 
         public void PauseGame()
         {
-            Time.timeScale = 0;
             IsGamePaused = true;
         }
 
         public void ResumeGame()
         {
-            Time.timeScale = 1;
             IsGamePaused = false;
         }
 

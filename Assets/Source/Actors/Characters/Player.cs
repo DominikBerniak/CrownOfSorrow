@@ -2,6 +2,7 @@
 using DungeonCrawl.Actors.Experience;
 using DungeonCrawl.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -19,17 +20,17 @@ namespace DungeonCrawl.Actors.Characters
         
         public Player()
         {
-            Name = "Dominik";
+            Name = ActorManager.Singleton.PlayerName;
             Level.Number = 1;
             MaxHealth = 100;
             CurrentHealth = MaxHealth;
-            _baseAttackDmg = 0;
+            _baseAttackDmg = 5;
             _baseArmor = 0;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.I) && !UserInterface.Singleton.IsFightScreenOn)
             {
                 // Show / hide equipment
                 if (Equipment.IsEquipmentOnScreen)
@@ -118,13 +119,12 @@ namespace DungeonCrawl.Actors.Characters
 
         public override bool OnCollision(Actor anotherActor)
         {
-            ApplyDamage(1);
-            return false;
+            UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
+            return CurrentHealth <= 0;
         }
 
         protected override void OnDeath()
         {
-            Debug.Log("Oh no, I'm dead!");
         }
 
         public override int DefaultSpriteId => 47;
