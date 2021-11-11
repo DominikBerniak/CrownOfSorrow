@@ -9,11 +9,6 @@ namespace DungeonCrawl.Actors.Characters
             {"axe", 282}, {"redKey", 561}, {"blueKey", 560}
         };
         
-        public FunctionalItem()
-        {
-            StatPower = ItemId;
-        }
-
         public override void SetSprite(Dictionary<string, int> variants, string key)
         {
             base.SetSprite(SpriteVariants, key);

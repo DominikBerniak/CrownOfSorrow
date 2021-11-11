@@ -161,16 +161,24 @@ namespace DungeonCrawl.Core
             go.AddComponent<SpriteRenderer>();
             var component = go.AddComponent<T>();
             component.SetSprite(component.SpriteVariants, variantName);
+            var key = (FunctionalItem) component;
+            key.StatName = "Key";
             switch (variantName)
             {
                 case "blueKey":
                     component.ItemId = 1;
+                    key.Name = "Blue Key";
+                    key.StatPower = 1;
                     break;
                 case "redKey":
                     component.ItemId = 2;
+                    key.Name = "Red Key";
+                    key.StatPower = 2;
                     break;
                 case "axe":
                     component.ItemId = 3;
+                    key.Name = "Pickaxe";
+                    key.StatPower = 3;
                     break;
             }
             go.name = actorName ?? component.DefaultName;

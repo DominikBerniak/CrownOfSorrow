@@ -8,12 +8,12 @@ namespace DungeonCrawl.Actors.Characters
 
         private List<string> Names = new List<string>()
         {
-            "Dragon blood potion", "Angelic tears potion", "Irinian water potion","orc urine","health potion"
+            "Dragon Blood Potion", "Angelic Tears Potion", "Irinian Water Potion","Orc Urine","Health Potion"
         };
-
-
+        
         public Consumable()
         {
+            Name = Names[Utilities.Random.Next(Names.Count)];
             StatName = "Health+";
             StatPower = 5;
         }
