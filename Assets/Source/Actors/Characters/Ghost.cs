@@ -4,6 +4,7 @@ using System.Linq;
 using DungeonCrawl.Core;
 using System;
 using System.Collections.Generic;
+using DungeonCrawl.Core.Player;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -11,6 +12,7 @@ namespace DungeonCrawl.Actors.Characters
 
     public class Ghost : Character
     {
+       
         private float DelayCounter { get; set; }
 
         public Ghost()
@@ -34,6 +36,18 @@ namespace DungeonCrawl.Actors.Characters
         protected override void OnDeath()
         {
             Debug.Log("I will hunt You down forever.....");
+        }
+        public bool CheckIfPlayerAround()
+        {
+            var playerLocation = GameObject.Find("Player").GetComponent<Player>();
+            
+
+        }
+
+        public void ChooseNextMove()
+        {
+
+
         }
 
         public void MoveGhost()
