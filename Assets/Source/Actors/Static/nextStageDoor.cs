@@ -34,17 +34,17 @@ namespace DungeonCrawl.Actors.Static
                             {
                                 case 1:
                                     SetSprite(SpriteVariants, "openedBlueDoor");
-                                    ((Player) anotherActor).Equipment.RemoveItem(element);
+                                   // ((Player) anotherActor).Equipment.RemoveItem(element);
                                     Detectable = false;
-                                    break;
+                                    return true;
                                 case 2:
                                     SetSprite(SpriteVariants, "openedRedDoor");
-                                    ((Player) anotherActor).Equipment.RemoveItem(element);
+                                  // ((Player) anotherActor).Equipment.RemoveItem(element);
                                     Detectable = false;
-                                    break;
+                                    return true;
                                 case 3:
                                     ActorManager.Singleton.DestroyActor(this);
-                                    ((Player) anotherActor).Equipment.RemoveItem(element);
+                                   // ((Player) anotherActor).Equipment.RemoveItem(element);
                                     break;
                             }
                         }
