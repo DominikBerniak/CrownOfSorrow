@@ -4,7 +4,6 @@ using System.Linq;
 using DungeonCrawl.Core;
 using System;
 using System.Collections.Generic;
-using DungeonCrawl.Core.Player;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -17,7 +16,7 @@ namespace DungeonCrawl.Actors.Characters
 
         public Ghost()
         {
-            Health = Utilities.Random.Next(5, 51);
+            CurrentHealth = Utilities.Random.Next(5, 51);
             AttackDmg = 5;
         }
 
@@ -26,9 +25,9 @@ namespace DungeonCrawl.Actors.Characters
             if (anotherActor is Player)
             {
                 Player player = (Player)anotherActor;
-                UserInterface.Singleton.ShowFightScreen("Ghost");
+                // UserInterface.Singleton.ShowFightScreen("Ghost");
                 ApplyDamage(player.AttackDmg);
-                return Health <= 0;
+                return CurrentHealth <= 0;
             }
             return false;
         }
@@ -40,7 +39,7 @@ namespace DungeonCrawl.Actors.Characters
         public bool CheckIfPlayerAround()
         {
             var playerLocation = GameObject.Find("Player").GetComponent<Player>();
-            
+            return true;
 
         }
 
