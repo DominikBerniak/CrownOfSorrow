@@ -15,7 +15,7 @@ namespace DungeonCrawl.Actors.Characters
 
         public Ghost()
         {
-            Health = Utilities.Random.Next(5, 51);
+            CurrentHealth = Utilities.Random.Next(5, 51);
             AttackDmg = 5;
         }
 
@@ -24,9 +24,9 @@ namespace DungeonCrawl.Actors.Characters
             if (anotherActor is Player)
             {
                 Player player = (Player)anotherActor;
-                UserInterface.Singleton.ShowFightScreen("Ghost");
+                // UserInterface.Singleton.ShowFightScreen("Ghost");
                 ApplyDamage(player.AttackDmg);
-                return Health <= 0;
+                return CurrentHealth <= 0;
             }
             return false;
         }
