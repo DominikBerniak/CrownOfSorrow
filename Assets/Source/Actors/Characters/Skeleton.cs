@@ -9,7 +9,7 @@ namespace DungeonCrawl.Actors.Characters
 {
     public class Skeleton : Character
     {
-        public float DelayCounter { get; set; }
+        private float DelayCounter { get; set; }
 
         public Skeleton()
         {
