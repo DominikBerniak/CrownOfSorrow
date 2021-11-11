@@ -13,7 +13,7 @@ namespace DungeonCrawl.Core
     /// </summary>
     public static class MapLoader
     {
-        public static int CurrentMapId { get; set; } = 3;
+        public static int CurrentMapId { get; set; } = 1;
         /// <summary>
         ///     Constructs map from txt file and spawns actors at appropriate positions
         /// </summary>
@@ -236,6 +236,10 @@ namespace DungeonCrawl.Core
                     break;
                 case ',':
                     ActorManager.Singleton.Spawn<Ghost>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case '?':
+                    ActorManager.Singleton.Spawn<Consumable>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
 
