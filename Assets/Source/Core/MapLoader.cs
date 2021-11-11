@@ -92,7 +92,7 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "horizontalRoad", "horizontalRoad", 1);
                     break;
                 case 'X':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "woodenObstacle", "woodenObstacle");
+                    ActorManager.Singleton.Spawn<NextStageDoor>(position.x, position.y, "redDoor", "redDoor", 1, 1, 1);
                     break;
                 case 'M':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crown", "crown");
@@ -110,10 +110,10 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crossDown", "crossDown");
                     break;
                 case 'b':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "door2", "door2");
+                    ActorManager.Singleton.Spawn<NextStageDoor>(position.x, position.y, "blueDoor", "blueDoor", 1, 1 ,1);
                     break;
                 case 'v':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "entrance", "entrance");
+                    ActorManager.Singleton.Spawn<NextStageDoor>(position.x, position.y, "stoneObstacle", "stoneObstacle", 1, 1, 1);
                     break;
                 case '1':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "stoneWallLeftCorner", "stoneWallLeftCorner");
@@ -141,9 +141,11 @@ namespace DungeonCrawl.Core
                     break;
                 case 'U':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "candle", "candle");
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
                 case 'u':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "candle1", "candle1");
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
                 case 'T':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tower", "tower");
@@ -197,6 +199,22 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Player>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
+                case '+':
+                    ActorManager.Singleton.Spawn<FunctionalItem>(position.x, position.y, "axe", "axe", 1, 1);
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+                case '*':
+                    ActorManager.Singleton.Spawn<FunctionalItem>(position.x, position.y, "blueKey", "blueKey", 1, 1);
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+                case '%':
+                    ActorManager.Singleton.Spawn<FunctionalItem>(position.x, position.y, "redKey", "redKey", 1, 1);
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+                case ')':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "gateway", "gateway", 1);
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
                 case 's':
                     ActorManager.Singleton.Spawn<Skeleton>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
@@ -210,6 +228,11 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Weapon>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
+                case '}':
+                    ActorManager.Singleton.Spawn<Armor>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                
                 default:
                     throw new ArgumentOutOfRangeException();
             }

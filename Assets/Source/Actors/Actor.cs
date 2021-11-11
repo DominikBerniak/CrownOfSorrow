@@ -32,6 +32,10 @@ namespace DungeonCrawl.Actors
             OnUpdate(Time.deltaTime);
         }
 
+        public Sprite GetSprite()
+        {
+            return _spriteRenderer.sprite;
+        }
         public void SetSpriteVisible(bool isVisible)
         {
             _spriteRenderer.enabled = isVisible;
@@ -90,7 +94,7 @@ namespace DungeonCrawl.Actors
         /// <summary>
         ///     Can this actor be detected with ActorManager.GetActorAt()? Should be false for purely cosmetic actors
         /// </summary>
-        public virtual bool Detectable => true;
+        public virtual bool Detectable { get; set; } = true;
 
         /// <summary>
         ///     Z position of this Actor (0 by default)
@@ -106,5 +110,7 @@ namespace DungeonCrawl.Actors
         ///     Default name assigned to this actor type
         /// </summary>
         public abstract string DefaultName { get; }
+        
+        public int ItemId { get; set; }
     }
 }

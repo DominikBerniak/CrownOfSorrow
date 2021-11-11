@@ -9,9 +9,9 @@ namespace DungeonCrawl.Actors.Characters
             "dupa", "dupa2", "dupa3"
         };
         
-        public override void UseItem(Player player, int health)
+        public override void UseItem()
         {
-            player.Health += health;
+            //Owner.Health += health;
         }
         
         public override int DefaultSpriteId => 120;

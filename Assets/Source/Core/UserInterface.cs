@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Core;
 using Source.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.Source.Core
@@ -31,12 +33,23 @@ namespace Assets.Source.Core
         /// </summary>
         public static UserInterface Singleton { get; private set; }
 
-        public GameObject fightUi;
+        public GameObject playerInfo;
+
+        public GameObject fightUiMain;
+
+        public GameObject fightUiFight;
 
         public GameObject equipmentUi;
+
+        public GameObject equipmentGrid;
+
+        public EquipmentItemSlot[] equipmentSlots;
+
+        public EquipmentItemSlot equippedWeapon;
+        
+        public EquipmentItemSlot equippedArmor;
         
         private TextMeshProUGUI[] _textComponents;
-        
 
         private void Awake()
         {
@@ -48,6 +61,7 @@ namespace Assets.Source.Core
             
             Singleton = this;
 
+            equipmentSlots = equipmentGrid.GetComponentsInChildren<EquipmentItemSlot>();
             _textComponents = GetComponentsInChildren<TextMeshProUGUI>();
         }
 
@@ -61,34 +75,83 @@ namespace Assets.Source.Core
             _textComponents[(int) textPosition].text = text;
         }
 
-        public void ShowFightScreen(string monsterName)
+        public void ShowFightScreen(Player player, Character monster)
         {
             PauseControl.Singleton.PauseGame();
-            fightUi.SetActive(true);
-            fightUi.GetComponentInChildren<TextMeshProUGUI>().text = $"It's a {monsterName}!";
+            fightUiMain.SetActive(true);
+            
+            var fightBackgroundImages = Resources.LoadAll<Sprite>("FightImages");
+            fightUiMain.GetComponent<Image>().sprite = fightBackgroundImages[Utilities.Random.Next(fightBackgroundImages.Length)];
+            GameObject.Find("MonsterInfo").GetComponent<TextMeshProUGUI>().text = 
+                $@"It's a {monster.Name}!
+
+Level : {monster.Level.Number} Health : {monster.MaxHealth} 
+Attack : {monster.AttackDmg} Armor : {monster.Armor}";
+            var leaveButton = GameObject.Find("LeaveButton").GetComponent<Button>();
+            var fightButton = GameObject.Find("FightButton").GetComponent<Button>();
+            leaveButton.onClick.AddListener(() => Fight.Singleton.TryToRun(leaveButton, fightButton, player, monster));
+            fightButton.onClick.AddListener(() => Fight.Singleton.FightMonster(leaveButton, fightButton, player, monster));
         }
 
         public void HideFightScreen()
         {
             PauseControl.Singleton.ResumeGame();
-            fightUi.SetActive(false);
+            fightUiMain.SetActive(false);
         }
 
-        public void ShowEquipment(List<Item> equipment)
+        public void ShowEquipment(Equipment equipment)
         {
-            PauseControl.Singleton.PauseGame();
-            equipmentUi.SetActive(true);
-            equipmentUi.GetComponentInChildren<TextMeshProUGUI>().text = "";
-            foreach (var item in equipment)
+            if (!equipmentUi.activeSelf)
             {
-                equipmentUi.GetComponentInChildren<TextMeshProUGUI>().text += item.Name + "\n";
+                PauseControl.Singleton.PauseGame();
+                equipmentUi.SetActive(true);
             }
+            for (int i = 0; i < equipmentSlots.Length; i++)
+            {
+                if (i < equipment.Items.Count)
+                {
+                    equipmentSlots[i].AddItem(equipment.Items[i]);
+                }
+                else
+                {
+                    equipmentSlots[i].ClearSlot();
+                }
+            }
+
+            if (equipment.EquippedWeapon != null)
+            {
+                equippedWeapon.AddItem(equipment.EquippedWeapon);
+            }
+            if (equipment.EquippedArmor != null)
+            {
+                equippedArmor.AddItem(equipment.EquippedArmor);
+            }
+            
+        }
+
+        public void UpdateEquipment()
+        {
+            var player = GameObject.Find("Player").GetComponent<Player>();
+            ShowEquipment(player.Equipment);
+            player.UpdatePlayerStats();
+            UpdatePlayerInfo(player);
         }
 
         public void HideEquipment()
         {
             PauseControl.Singleton.ResumeGame();
             equipmentUi.SetActive(false);
+        }
+
+        public void UpdatePlayerInfo(Player player)
+        {
+            GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>().text = player.Name;
+            GameObject.Find("PlayerStats").GetComponent<TextMeshProUGUI>().text = 
+                $"Level : {player.Level.Number} | Attack : {player.AttackDmg} | Armor : {player.Armor}";
+            GameObject.Find("HealthBar").GetComponentInChildren<TextMeshProUGUI>().text = $"{player.CurrentHealth} / {player.MaxHealth}";
+            var healthBar = playerInfo.GetComponentInChildren<Slider>();
+            healthBar.maxValue = player.MaxHealth;
+            healthBar.value = player.CurrentHealth;
         }
     }
 }

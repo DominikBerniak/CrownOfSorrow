@@ -8,18 +8,30 @@ namespace DungeonCrawl.Actors.Characters
         {
             "dupa", "dupa2", "dupa3"
         };
-            
-        public override void UseItem(Player player, int damage)
+
+        public Weapon()
         {
-            player.AttackDmg += damage;
+            Name = Names[0];
+            StatName = "Attack";
+            StatPower = 10;
+        }
+        public override void UseItem()
+        {
+            //Owner.AttackDmg += damage;
+            if (Owner.Equipment.EquippedWeapon != this)
+            {
+                Owner.Equipment.EquippedWeapon = this;
+                Owner.Equipment.RemoveItem(this);
+            }
+            else
+            {
+                Owner.Equipment.EquippedWeapon = null;
+                Owner.Equipment.AddItem(this);
+            }
+
         }
 
         public override int DefaultSpriteId => 281;
         public override string DefaultName => "Weapon";
-
-        public override void SetName()
-        {
-            Name = Names[Utilities.Random.Next(Names.Count)];
-        }
     }
 }

@@ -153,5 +153,55 @@ namespace DungeonCrawl.Core
             
             return component;
         }
+        
+        public T Spawn<T>(int x, int y, string variantName, string actorName = null, int number = 0, int secondNumber = 0) where T : FunctionalItem
+        {
+            var go = new GameObject();
+            go.AddComponent<SpriteRenderer>();
+            var component = go.AddComponent<T>();
+            component.SetSprite(component.SpriteVariants, variantName);
+            switch (variantName)
+            {
+                case "blueKey":
+                    component.ItemId = 1;
+                    break;
+                case "redKey":
+                    component.ItemId = 2;
+                    break;
+                case "axe":
+                    component.ItemId = 3;
+                    break;
+            }
+            go.name = actorName ?? component.DefaultName;
+            component.Position = (x, y);
+            _allActors.Add(component);
+            
+            return component;
+        }
+
+        public T Spawn<T>(int x, int y, string variantName, string actorName = null, int number = 0, int secondNumber = 0, int thirdNumber = 0) where T : NextStageDoor
+        {
+            var go = new GameObject();
+            go.AddComponent<SpriteRenderer>();
+            var component = go.AddComponent<T>();
+            component.SetSprite(component.SpriteVariants, variantName);
+            switch (variantName)
+            {
+                case "blueDoor":
+                    component.ItemId = 1;
+                    break;
+                case "redDoor":
+                    component.ItemId = 2;
+                    break;
+                case "stoneObstacle":
+                    component.ItemId = 3;
+                    break;
+            }
+            go.name = actorName ?? component.DefaultName;
+            component.Position = (x, y);
+            _allActors.Add(component);
+            
+            return component;
+        }
     }
 }
