@@ -66,7 +66,7 @@ namespace DungeonCrawl.Actors.Characters
         {
             int ghostX = Position.x;
             int ghostY = Position.y;
-            int ghostActivationRadius = 5;
+            int ghostActivationRadius = 8;
  
             
             var playerLocation = GameObject.Find("Player").GetComponent<Player>().Position;
