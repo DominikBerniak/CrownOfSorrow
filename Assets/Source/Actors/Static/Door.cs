@@ -12,7 +12,7 @@ namespace DungeonCrawl.Actors.Static
         {
             if (anotherActor is Player)
             {
-                anotherActor.Position = (1, -1);
+                anotherActor.Position = (40, -33);
                 MapLoader.CurrentMapId++;
                 MapLoader.LoadMap();
                 ActorManager.Singleton.DestroyActor(this);

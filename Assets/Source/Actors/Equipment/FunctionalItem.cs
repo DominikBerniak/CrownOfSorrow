@@ -4,18 +4,27 @@ namespace DungeonCrawl.Actors.Characters
 {
     public class FunctionalItem : Item
     {
-        private List<string> Names = new List<string>()
+        public Dictionary<string, int> SpriteVariants = new Dictionary<string, int>()
         {
-            "dupa", "dupa2", "dupa3"
+            {"axe", 282}, {"redKey", 561}, {"blueKey", 560}
         };
-
+        
         public FunctionalItem()
+        {
+            StatPower = ItemId;
+        }
+
+        public override void SetSprite(Dictionary<string, int> variants, string key)
+        {
+            base.SetSprite(SpriteVariants, key);
+        }
+        
+        public override void UseItem()
         {
         }
 
-        public override int DefaultSpriteId { get; set; } = 110;
+        public override int DefaultSpriteId { get; set; }
 
-        public override string DefaultName => "Door";
-        
+        public override string DefaultName => "Key";
     }
 }

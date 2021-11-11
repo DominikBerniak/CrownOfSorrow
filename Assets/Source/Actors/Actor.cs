@@ -111,5 +111,6 @@ namespace DungeonCrawl.Actors
         /// </summary>
         public abstract string DefaultName { get; }
         
+        public int ItemId { get; set; }
     }
 }

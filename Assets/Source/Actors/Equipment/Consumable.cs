@@ -4,10 +4,13 @@ namespace DungeonCrawl.Actors.Characters
 {
     public class Consumable: Item
     {
+
+
         private List<string> Names = new List<string>()
         {
-            "dupa", "dupa2", "dupa3"
+            "Dragon blood potion", "Angelic tears potion", "Irinian water potion","orc urine","health potion"
         };
+
 
         public Consumable()
         {
@@ -16,6 +19,12 @@ namespace DungeonCrawl.Actors.Characters
         }
         public override void UseItem()
         {
+            if(Owner.CurrentHealth + StatPower >= Owner.MaxHealth)
+            {
+                Owner.CurrentHealth = Owner.MaxHealth;
+                Owner.Equipment.RemoveItem(this);
+                return;
+            }
             Owner.CurrentHealth += StatPower;
             Owner.Equipment.RemoveItem(this);
         }
