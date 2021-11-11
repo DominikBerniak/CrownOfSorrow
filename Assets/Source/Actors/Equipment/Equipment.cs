@@ -10,7 +10,7 @@ namespace DungeonCrawl.Actors.Characters
 
         public Item EquippedWeapon { get; set; }
         public Item EquippedArmor { get; set; }
-        
+
         public bool IsEquipmentOnScreen;
 
         public void AddItem(Item item)
