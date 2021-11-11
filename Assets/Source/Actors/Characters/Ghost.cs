@@ -23,7 +23,7 @@ namespace DungeonCrawl.Actors.Characters
             if (anotherActor is Player)
             {
                 Player player = (Player)anotherActor;
-                //UserInterface.Singleton.ShowFightScreen("Ghost");
+                UserInterface.Singleton.ShowFightScreen(player,this);
                 return CurrentHealth <= 0;
             }
             return false;
