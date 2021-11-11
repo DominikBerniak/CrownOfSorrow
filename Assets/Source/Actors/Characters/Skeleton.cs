@@ -1,6 +1,7 @@
 ﻿using Assets.Source.Core;
 using UnityEngine;
 using DungeonCrawl.Core;
+using System;
 using System.Collections.Generic;
 
 namespace DungeonCrawl.Actors.Characters
@@ -13,7 +14,6 @@ namespace DungeonCrawl.Actors.Characters
         {
             Level.Number = 1;
             Name = "Skelly";
-            //CurrentHealth = Utilities.Random.Next(5, 51);
             MaxHealth = 10;
             CurrentHealth = MaxHealth;
             AttackDmg = 5;
@@ -95,13 +95,10 @@ namespace DungeonCrawl.Actors.Characters
                 DelayCounter = 0;
                 MoveSkeleton();
             }
-
         }
         public override int DefaultSpriteId => 316;
         public override string DefaultName => "Skeleton";
     }
-
-
 }
 
 

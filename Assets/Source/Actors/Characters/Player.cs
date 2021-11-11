@@ -8,7 +8,7 @@ namespace DungeonCrawl.Actors.Characters
 {
     public class Player : Character
     {
-        private (int, int) _targetPosition;
+        public (int, int) _targetPosition;
 
         private bool _isMoving;
 
@@ -129,5 +129,6 @@ namespace DungeonCrawl.Actors.Characters
 
         public override int DefaultSpriteId => 47;
         public override string DefaultName => "Player";
+
     }
 }
