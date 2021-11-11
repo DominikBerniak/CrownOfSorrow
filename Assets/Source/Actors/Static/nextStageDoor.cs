@@ -7,13 +7,9 @@ namespace DungeonCrawl.Actors.Static
 {
     public class NextStageDoor : Actor
     {
-        public override int DefaultSpriteId => 147;
+        public override int DefaultSpriteId { get; set; }
         public override string DefaultName => "Door";
 
-        public NextStageDoor()
-        {
-        }
-        
         public Dictionary<string, int> SpriteVariants = new Dictionary<string, int>()
         {
             {"blueDoor", 431} , {"redDoor", 532}, {"stoneObstacle", 640}, {"openedBlueDoor", 433}

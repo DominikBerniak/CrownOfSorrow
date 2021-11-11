@@ -2,20 +2,27 @@
 using UnityEngine;
 using DungeonCrawl.Core;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Skeleton : Character
     {
         private float DelayCounter { get; set; }
+        
+        private List<string> Names = new List<string>()
+        {
+            "Scary Spooky Skeleton", "Crazy Bones", "Skelly", "Terrifying Skeleton", "Jack Skellington", "T-Bone"
+        };
 
         public Skeleton()
         {
             Level.Number = 1;
-            Name = "Skelly";
-            MaxHealth = 10;
+            Name = Names[Utilities.Random.Next(Names.Count)];
+            MaxHealth = Utilities.Random.Next(10,51);
             CurrentHealth = MaxHealth;
-            AttackDmg = 5;
+            AttackDmg = Utilities.Random.Next(5, 16);
+            Armor = Utilities.Random.Next(11);
         }
        public override bool OnCollision(Actor anotherActor)
         {
@@ -95,7 +102,8 @@ namespace DungeonCrawl.Actors.Characters
                 MoveSkeleton();
             }
         }
-        public override int DefaultSpriteId => 316;
+
+        public override int DefaultSpriteId { get; set; } = 316;
         public override string DefaultName => "Skeleton";
     }
 }

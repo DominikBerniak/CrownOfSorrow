@@ -6,14 +6,21 @@ namespace DungeonCrawl.Actors.Characters
     {
         private List<string> Names = new List<string>()
         {
-            "dupa", "dupa2", "dupa3"
+            "Great Sword of Power", "Long Sword", "Sword", "Great Sword", "One Sword To Rule Them All", "Excalibur"
+        };
+
+        private List<int> SpriteIds = new List<int>()
+        {
+            319, 320, 321, 322, 323, 367, 368, 369, 370, 371,
+            415, 416, 417, 418, 419
         };
 
         public Weapon()
         {
             Name = Names[Utilities.Random.Next(Names.Count)];
             StatName = "Attack";
-            StatPower = 10;
+            StatPower = Utilities.Random.Next(1, 16);
+            DefaultSpriteId = SpriteIds[Utilities.Random.Next(SpriteIds.Count)];
         }
         public override void UseItem()
         {
@@ -30,7 +37,8 @@ namespace DungeonCrawl.Actors.Characters
 
         }
 
-        public override int DefaultSpriteId => 281;
+        public override int DefaultSpriteId { get; set; }
+
         public override string DefaultName => "Weapon";
     }
 }

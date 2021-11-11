@@ -6,14 +6,20 @@ namespace DungeonCrawl.Actors.Characters
     {
         private List<string> Names = new List<string>()
         {
-            "dupa", "dupa2", "dupa3"
+            "Great Plate Armor", "Amazing Cloth Armor", "Broken Cloth Armor", "Cloth Armor", "Plate Armor", "Light Armor"
+        };
+
+        private List<int> SpriteIds = new List<int>()
+        {
+            31, 83, 80, 35
         };
 
         public Armor()
         {
             Name = Names[Utilities.Random.Next(Names.Count)];
             StatName = "Armor";
-            StatPower = 10;
+            StatPower = Utilities.Random.Next(1, 16);
+            DefaultSpriteId = SpriteIds[Utilities.Random.Next(SpriteIds.Count)];
         }
         
         public override void UseItem()
@@ -31,7 +37,8 @@ namespace DungeonCrawl.Actors.Characters
             }
         }
         
-        public override int DefaultSpriteId => 31;
+        public override int DefaultSpriteId { get; set; }
+
         public override string DefaultName => "Armor";
     }
 }

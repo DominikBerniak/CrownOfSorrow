@@ -2,6 +2,8 @@
 using UnityEngine;
 using DungeonCrawl.Core;
 using System;
+using System.Collections.Generic;
+using DungeonCrawl.Actors.Static;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -9,21 +11,29 @@ namespace DungeonCrawl.Actors.Characters
 
     public class Ghost : Character
     {
-
         private float DelayCounter { get; set; }
+        
+        private List<string> Names = new List<string>()
+        {
+            "Ghostly Ghost", "Scary Ghost", "Simply a Ghost", "Ghoooooooost", "Spooky Ghost"
+        };
 
         public Ghost()
         {
-            CurrentHealth = Utilities.Random.Next(5, 51);
-            AttackDmg = 5;
+            Level.Number = 1;
+            Name = Names[Utilities.Random.Next(Names.Count)];
+            MaxHealth = Utilities.Random.Next(10,51);
+            CurrentHealth = MaxHealth;
+            AttackDmg = Utilities.Random.Next(5, 16);
+            Armor = Utilities.Random.Next(11);
         }
 
         public override bool OnCollision(Actor anotherActor)
         {
             if (anotherActor is Player)
             {
-                Player player = (Player)anotherActor;
-                UserInterface.Singleton.ShowFightScreen(player,this);
+                Player player = (Player) anotherActor;
+                UserInterface.Singleton.ShowFightScreen(player, this);
                 return CurrentHealth <= 0;
             }
             return false;
@@ -45,12 +55,12 @@ namespace DungeonCrawl.Actors.Characters
             {
                 return (ghostX, ghostY);
             }
-            else if (x_distance == 0)
+            if (x_distance == 0)
             {
                 y_step = y_distance / Math.Abs(y_distance);
                 return (ghostX, ghostY - y_step);
             }
-            else if (y_distance == 0)
+            if (y_distance == 0)
             {
                 x_step = x_distance / Math.Abs(x_distance);
                 return (ghostX - x_step, ghostY);
@@ -79,13 +89,26 @@ namespace DungeonCrawl.Actors.Characters
         
         public void ChangeGhostPosition()
         {
-            Position = NextMove();
+            var targetPosition = NextMove();
+            var actorAtTargetPosition = ActorManager.Singleton.GetActorAt(targetPosition);
+            if (actorAtTargetPosition == null || actorAtTargetPosition is Wall)
+            {
+                Position = targetPosition;
+            }
+            else if (actorAtTargetPosition.OnCollision(this))
+            {
+                Position = targetPosition;
+            }
         }
 
 
-        protected override void OnUpdate(float deltatime)
+        protected override void OnUpdate(float deltaTime)
         {
-            DelayCounter += deltatime;
+            if (PauseControl.Singleton.IsGamePaused)
+            {
+                return;
+            }
+            DelayCounter += deltaTime;
             if (DelayCounter >= 1)
             {
                 DelayCounter = 0;
@@ -94,7 +117,7 @@ namespace DungeonCrawl.Actors.Characters
 
         }
 
-        public override int DefaultSpriteId => 313;
+        public override int DefaultSpriteId { get; set; } = 313;
         public override string DefaultName => "Ghost";
 
 

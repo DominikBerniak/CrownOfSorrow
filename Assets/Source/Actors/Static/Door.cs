@@ -5,14 +5,14 @@ namespace DungeonCrawl.Actors.Static
 {
     public class Door : Actor
     {
-        public override int DefaultSpriteId => 147;
+        public override int DefaultSpriteId { get; set; } = 147;
         public override string DefaultName => "Door";
 
         public override bool OnCollision(Actor anotherActor)
         {
             if (anotherActor is Player)
             {
-                anotherActor.Position = (1, -1);
+                anotherActor.Position = (40, -33);
                 MapLoader.CurrentMapId++;
                 MapLoader.LoadMap();
                 ActorManager.Singleton.DestroyActor(this);
