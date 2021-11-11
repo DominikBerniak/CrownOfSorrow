@@ -36,7 +36,7 @@ namespace DungeonCrawl.Actors.Characters
             Debug.Log("Well, I was already dead anyway...");
         }
 
-        public (int, int) checkMoveOptions()
+        public (int, int) CheckMoveOptions()
         {
             (int, int)[] tab = new (int, int)[4];
             List<(int, int)> newCords = new List<(int, int)>();
@@ -73,7 +73,7 @@ namespace DungeonCrawl.Actors.Characters
 
         public void MoveSkeleton()
         {
-            Position = checkMoveOptions();
+            Position = CheckMoveOptions();
         }
 
 
