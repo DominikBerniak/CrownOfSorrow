@@ -39,17 +39,29 @@ namespace Assets.Source.Core
 
         public GameObject fightUiFight;
 
+        public GameObject monsterInfo;
+
+        public GameObject monsterImage;
+
         public GameObject equipmentUi;
 
         public GameObject equipmentGrid;
+
+        public GameObject fightResultMessage;
 
         public EquipmentItemSlot[] equipmentSlots;
 
         public EquipmentItemSlot equippedWeapon;
         
         public EquipmentItemSlot equippedArmor;
+
+        public GameObject usableItemsGrid;
+        public EquipmentItemSlot[] usableItems;
         
+        public bool IsFightScreenOn;
+
         private TextMeshProUGUI[] _textComponents;
+        
 
         private void Awake()
         {
@@ -62,6 +74,7 @@ namespace Assets.Source.Core
             Singleton = this;
 
             equipmentSlots = equipmentGrid.GetComponentsInChildren<EquipmentItemSlot>();
+            usableItems = usableItemsGrid.GetComponentsInChildren<EquipmentItemSlot>();
             _textComponents = GetComponentsInChildren<TextMeshProUGUI>();
         }
 
@@ -77,24 +90,30 @@ namespace Assets.Source.Core
 
         public void ShowFightScreen(Player player, Character monster)
         {
+            IsFightScreenOn = true;
             PauseControl.Singleton.PauseGame();
             fightUiMain.SetActive(true);
-            
+            monsterInfo.SetActive(true);
             var fightBackgroundImages = Resources.LoadAll<Sprite>("FightImages");
             fightUiMain.GetComponent<Image>().sprite = fightBackgroundImages[Utilities.Random.Next(fightBackgroundImages.Length)];
-            GameObject.Find("MonsterInfo").GetComponent<TextMeshProUGUI>().text = 
-                $@"It's a {monster.Name}!
-
-Level : {monster.Level.Number} Health : {monster.MaxHealth} 
-Attack : {monster.AttackDmg} Armor : {monster.Armor}";
+            UpdateFightScreen(monster, player);
+            monsterImage.SetActive(true);
+            monsterImage.GetComponentInChildren<Image>().sprite = monster.GetSprite();
             var leaveButton = GameObject.Find("LeaveButton").GetComponent<Button>();
             var fightButton = GameObject.Find("FightButton").GetComponent<Button>();
             leaveButton.onClick.AddListener(() => Fight.Singleton.TryToRun(leaveButton, fightButton, player, monster));
-            fightButton.onClick.AddListener(() => Fight.Singleton.FightMonster(leaveButton, fightButton, player, monster));
+            fightButton.onClick.AddListener(() => StartCoroutine(Fight.Singleton.FightMonster(leaveButton, fightButton, player, monster)));
+        }
+
+        public void UpdateFightScreen(Character monster, Player player)
+        {
+            UpdateMonsterInfo(monster);
+            UpdatePlayerInfo(player);
         }
 
         public void HideFightScreen()
         {
+            IsFightScreenOn = false;
             PauseControl.Singleton.ResumeGame();
             fightUiMain.SetActive(false);
         }
@@ -148,10 +167,65 @@ Attack : {monster.AttackDmg} Armor : {monster.Armor}";
             GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>().text = player.Name;
             GameObject.Find("PlayerStats").GetComponent<TextMeshProUGUI>().text = 
                 $"Level : {player.Level.Number} | Attack : {player.AttackDmg} | Armor : {player.Armor}";
-            GameObject.Find("HealthBar").GetComponentInChildren<TextMeshProUGUI>().text = $"{player.CurrentHealth} / {player.MaxHealth}";
+            GameObject.Find("PlayerHealthBar").GetComponentInChildren<TextMeshProUGUI>().text = $"{player.CurrentHealth} / {player.MaxHealth}";
             var healthBar = playerInfo.GetComponentInChildren<Slider>();
             healthBar.maxValue = player.MaxHealth;
             healthBar.value = player.CurrentHealth;
+        }
+
+        public void UpdateMonsterInfo(Character monster)
+        {
+            var monsterHealthBar = GameObject.Find("MonsterHealthBar");
+            monsterHealthBar.GetComponentInChildren<TextMeshProUGUI>().text = $"{monster.CurrentHealth} / {monster.MaxHealth}";
+            var monsterHealthBarSlider = monsterHealthBar.GetComponent<Slider>();
+            monsterHealthBarSlider.maxValue = monster.MaxHealth;
+            monsterHealthBarSlider.value = monster.CurrentHealth;
+            monsterInfo.GetComponent<TextMeshProUGUI>().text = 
+                $@"It's {monster.Name}!
+
+
+Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {monster.Armor}";
+        }
+
+        public void ShowFightResultMessage(Player player, Character monster)
+        {
+            monsterInfo.SetActive(false);
+            monsterImage.SetActive(false);
+            fightResultMessage.SetActive(true);
+            if (player.CurrentHealth <= 0)
+            {
+                fightResultMessage.GetComponent<TextMeshProUGUI>().text = $"DEFEAT!\n You have been defeated by {monster.Name}";
+            }
+            else
+            {
+                fightResultMessage.GetComponent<TextMeshProUGUI>().text = $"VICTORY!\n You have defeated {monster.Name}";
+            }
+        }
+
+        public void HideFightResultMessage()
+        {
+            fightResultMessage.SetActive(false);
+        }
+
+        public void ShowUseItemUi(Player player)
+        {
+             usableItemsGrid.SetActive(true);
+            for (int i = 0; i < usableItems.Length; i++)
+            {
+                if (i < player.Equipment.Items.Count && player.Equipment.Items[i] is Consumable)
+                {
+                    usableItems[i].AddItem(player.Equipment.Items[i]);
+                }
+                else
+                {
+                    usableItems[i].ClearSlot();
+                }
+            }
+        }
+        
+        public void HideUseItemUi()
+        {
+            usableItemsGrid.SetActive(false);
         }
     }
 }

@@ -76,6 +76,10 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Armor>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
+                case 'o':
+                    ActorManager.Singleton.Spawn<Consumable>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
                 
                 default:
                     throw new ArgumentOutOfRangeException();

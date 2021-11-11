@@ -1,9 +1,6 @@
 ﻿using Assets.Source.Core;
-using DungeonCrawl.Actors.Experience;
 using UnityEngine;
-using System.Linq;
 using DungeonCrawl.Core;
-using System;
 using System.Collections.Generic;
 
 namespace DungeonCrawl.Actors.Characters
@@ -16,7 +13,9 @@ namespace DungeonCrawl.Actors.Characters
         {
             Level.Number = 1;
             Name = "Skelly";
-            MaxHealth = Utilities.Random.Next(5, 51);
+            //CurrentHealth = Utilities.Random.Next(5, 51);
+            MaxHealth = 10;
+            CurrentHealth = MaxHealth;
             AttackDmg = 5;
         }
        public override bool OnCollision(Actor anotherActor)
@@ -25,9 +24,8 @@ namespace DungeonCrawl.Actors.Characters
             {
                 Player player = (Player) anotherActor;
                 UserInterface.Singleton.ShowFightScreen(player, this);
-                return MaxHealth <= 0;
+                return CurrentHealth <= 0;
             }
-
             return false;
         }
 
@@ -36,7 +34,7 @@ namespace DungeonCrawl.Actors.Characters
             Debug.Log("Well, I was already dead anyway...");
         }
 
-        public (int, int) checkMoveOptions()
+        public (int, int) GetNewPosition()
         {
             (int, int)[] tab = new (int, int)[4];
             List<(int, int)> newCords = new List<(int, int)>();
@@ -54,7 +52,7 @@ namespace DungeonCrawl.Actors.Characters
             {
 
                 var actorAtTargetPosition = ActorManager.Singleton.GetActorAt(tab[z]);
-                if (actorAtTargetPosition is Actors.Characters.Player)
+                if (actorAtTargetPosition is Player)
                 {
                     return (tab[z].Item1, tab[z].Item2); 
                 }
@@ -67,19 +65,31 @@ namespace DungeonCrawl.Actors.Characters
             {
                 return (Position.x, Position.y);
             }
-            (int, int) nextMove = newCords[UnityEngine.Random.Range(0, newCords.Count)];
+            (int, int) nextMove = newCords[Random.Range(0, newCords.Count)];
             return nextMove;
         }
 
         public void MoveSkeleton()
         {
-            Position = checkMoveOptions();
+            var targetPosition = GetNewPosition();
+            var actorAtTargetPosition = ActorManager.Singleton.GetActorAt(targetPosition);
+            if (actorAtTargetPosition == null)
+            {
+                Position = targetPosition;
+            }
+            else if (actorAtTargetPosition.OnCollision(this))
+            {
+                Position = targetPosition;
+            }
         }
 
-
-        protected override void OnUpdate(float deltatime)
+        protected override void OnUpdate(float deltaTime)
         {
-            DelayCounter += deltatime;
+            if (PauseControl.Singleton.IsGamePaused)
+            {
+                return;
+            }
+            DelayCounter += deltaTime;
             if (DelayCounter >= 1)
             {
                 DelayCounter = 0;
@@ -89,8 +99,6 @@ namespace DungeonCrawl.Actors.Characters
         }
         public override int DefaultSpriteId => 316;
         public override string DefaultName => "Skeleton";
-
-
     }
 
 

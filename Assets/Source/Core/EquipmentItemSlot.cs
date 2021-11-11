@@ -1,5 +1,6 @@
 using Assets.Source.Core;
 using DungeonCrawl.Actors.Characters;
+using Source.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,15 @@ public class EquipmentItemSlot : MonoBehaviour
         {
             _item.UseItem();
             ClearSlot();
-            UserInterface.Singleton.UpdateEquipment();
+            if (Fight.Singleton.isFighting)
+            {
+                Fight.Singleton.isUsingItem = false;
+                Fight.Singleton.isAfterAttack = true;
+                UserInterface.Singleton.HideUseItemUi();
+                return;
+            }
+            UserInterface.Singleton.UpdateEquipment();    
+
         }
     }
 

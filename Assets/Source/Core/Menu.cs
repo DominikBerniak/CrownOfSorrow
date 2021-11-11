@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ public class Menu : MonoBehaviour
 
     public void PlayGame()
     {
+        string playerName = GameObject.Find("UserNameInput").GetComponent<TextMeshProUGUI>().text;
+        PlayerPrefs.SetString("playerName", playerName);
         SceneManager.LoadScene(1);
     }
 }

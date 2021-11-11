@@ -11,13 +11,12 @@ namespace DungeonCrawl.Actors.Characters
 
         public Weapon()
         {
-            Name = Names[0];
+            Name = Names[Utilities.Random.Next(Names.Count)];
             StatName = "Attack";
             StatPower = 10;
         }
         public override void UseItem()
         {
-            //Owner.AttackDmg += damage;
             if (Owner.Equipment.EquippedWeapon != this)
             {
                 Owner.Equipment.EquippedWeapon = this;
