@@ -1,10 +1,43 @@
+<<<<<<< HEAD
 ﻿
 
+=======
+>>>>>>> 1dc3963179fddc2956530465d9f24d9159c22232
 namespace DungeonCrawl.Actors.Characters
 {
-    public abstract class Item
+    public class Item : Actor
     {
-        public abstract void UseItem(Player player, int utility);
+        public string Name { get; set; }
+        public string StatName { get; set; }
+        public int StatPower { get; set; }
+        public virtual void UseItem(){}
 
+        public Character Owner { get; private set; }
+        
+        public virtual void SetName(){}
+        
+        public override bool OnCollision(Actor anotherActor)
+        {
+            if (anotherActor is Player)
+            {
+                Player player = (Player) anotherActor;
+                if (player.Equipment.Items.Count == 24)
+                {
+                    return false;
+                }
+                player.Equipment.AddItem(this);
+                Owner = player;
+                SetSpriteVisible(false);
+                Detectable = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        public override int DefaultSpriteId { get; }
+        public override string DefaultName { get; }
+        
+        public override int Z => -1;
     }
 }

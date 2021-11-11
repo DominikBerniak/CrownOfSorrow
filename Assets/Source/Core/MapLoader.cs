@@ -49,10 +49,10 @@ namespace DungeonCrawl.Core
             switch (c)
             {
                 case '#':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "wall", String.Empty);
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "wall", "Wall");
                     break;
                 case '~':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "water", String.Empty);
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "water", "Water");
                     break;
                 case 'Y':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tree", String.Empty);
@@ -127,6 +127,20 @@ namespace DungeonCrawl.Core
                 case '=':
                     ActorManager.Singleton.Spawn<Door>(position);
                     break;
+                case 'i':
+                    ActorManager.Singleton.Spawn<Weapon>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case 'z':
+                    ActorManager.Singleton.Spawn<Armor>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case ',':
+                    ActorManager.Singleton.Spawn<Ghost>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

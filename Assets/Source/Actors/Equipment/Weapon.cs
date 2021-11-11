@@ -1,17 +1,36 @@
-﻿namespace DungeonCrawl.Actors.Characters
+﻿using System.Collections.Generic;
+
+namespace DungeonCrawl.Actors.Characters
 {
     public class Weapon : Item
     {
-        private string Name { get; set; }
-        
-        public Weapon(string name)
+        private List<string> Names = new List<string>()
         {
-            this.Name = name;
-        }
-        
-        public override void UseItem(Player player, int damage)
+            "dupa", "dupa2", "dupa3"
+        };
+
+        public Weapon()
         {
-            player.AttackDmg += damage;
+            Name = Names[Utilities.Random.Next(Names.Count)];
+            StatName = "Attack";
+            StatPower = 10;
         }
+        public override void UseItem()
+        {
+            if (Owner.Equipment.EquippedWeapon != this)
+            {
+                Owner.Equipment.EquippedWeapon = this;
+                Owner.Equipment.RemoveItem(this);
+            }
+            else
+            {
+                Owner.Equipment.EquippedWeapon = null;
+                Owner.Equipment.AddItem(this);
+            }
+
+        }
+
+        public override int DefaultSpriteId => 281;
+        public override string DefaultName => "Weapon";
     }
 }

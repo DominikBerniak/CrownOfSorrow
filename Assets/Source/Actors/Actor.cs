@@ -15,13 +15,7 @@ namespace DungeonCrawl.Actors
                 transform.position = new Vector3(value.x, value.y, Z);
             }
         }
-
-        public int Health { get; set; }
         
-        public int AttackDmg { get; set; }
-        
-        public int Armor { get; set;  }
-
         private (int x, int y) _position;
         private SpriteRenderer _spriteRenderer;
         
@@ -36,6 +30,15 @@ namespace DungeonCrawl.Actors
         private void Update()
         {
             OnUpdate(Time.deltaTime);
+        }
+
+        public Sprite GetSprite()
+        {
+            return _spriteRenderer.sprite;
+        }
+        public void SetSpriteVisible(bool isVisible)
+        {
+            _spriteRenderer.enabled = isVisible;
         }
 
         public virtual void SetSprite(int id)
@@ -91,7 +94,7 @@ namespace DungeonCrawl.Actors
         /// <summary>
         ///     Can this actor be detected with ActorManager.GetActorAt()? Should be false for purely cosmetic actors
         /// </summary>
-        public virtual bool Detectable => true;
+        public virtual bool Detectable { get; set; } = true;
 
         /// <summary>
         ///     Z position of this Actor (0 by default)

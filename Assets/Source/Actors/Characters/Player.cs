@@ -1,24 +1,53 @@
-﻿using System;
+﻿using Assets.Source.Core;
+using DungeonCrawl.Actors.Experience;
 using DungeonCrawl.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Player : Character
     {
-        private (int, int) _targetPosition;
+        public (int, int) _targetPosition;
 
         private bool _isMoving;
 
         private float _timeSinceLastMove;
+
+        private int _baseArmor;
+
+        private int _baseAttackDmg;
+        
         public Player()
         {
-            Health = 100;
-            AttackDmg = 5;
+            Name = ActorManager.Singleton.PlayerName;
+            Level.Number = 1;
+            MaxHealth = 100;
+            CurrentHealth = MaxHealth;
+            _baseAttackDmg = 5;
+            _baseArmor = 0;
         }
+
         protected override void OnUpdate(float deltaTime)
         {
-            // _timeSinceLastMove += deltaTime;
+            if (Input.GetKeyDown(KeyCode.I) && !UserInterface.Singleton.IsFightScreenOn)
+            {
+                // Show / hide equipment
+                if (Equipment.IsEquipmentOnScreen)
+                {
+                    Equipment.HideEquipment();    
+                }
+                else
+                {
+                    Equipment.ShowEquipment();    
+                }
+            }
+            if (PauseControl.Singleton.IsGamePaused)
+            {
+                return;
+            }
+            _timeSinceLastMove += deltaTime;
+            
             // if (!_isMoving && Input.GetMouseButtonDown(0))
             // {
             //     _isMoving = true;
@@ -78,24 +107,28 @@ namespace DungeonCrawl.Actors.Characters
                 TryMove(Direction.Right);
             }
             CameraController.Singleton.Position = Position;
+            UpdatePlayerStats();
+            UserInterface.Singleton.UpdatePlayerInfo(this);
+        }
+
+        public void UpdatePlayerStats()
+        {
+            AttackDmg = _baseAttackDmg + (Equipment.EquippedWeapon != null ? Equipment.EquippedWeapon.StatPower : 0);
+            Armor = _baseArmor + (Equipment.EquippedArmor != null ? Equipment.EquippedArmor.StatPower : 0);
         }
 
         public override bool OnCollision(Actor anotherActor)
         {
-            ApplyDamage(1);
-            return false;
+            UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
+            return CurrentHealth <= 0;
         }
 
         protected override void OnDeath()
         {
-            Debug.Log("Oh no, I'm dead!");
         }
 
         public override int DefaultSpriteId => 47;
         public override string DefaultName => "Player";
 
-        public void Dupa()
-        {
-        }
     }
 }

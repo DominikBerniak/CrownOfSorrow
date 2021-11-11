@@ -1,19 +1,26 @@
-﻿using DungeonCrawl.Core;
+﻿using DungeonCrawl.Actors.Experience;
+using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public abstract class Character : Actor
     {
-        //public int Health { get; set; }
-        
-        //public int AttackDmg { get; set; }
+        public string Name { get; set; }
+        public int MaxHealth { get; set; }
+        public int CurrentHealth { get; set; }
+        public int AttackDmg { get; set; }
+        public int Armor { get; set; }
+
+        public Level Level { get; set; } = new Level();
+
+        public Equipment Equipment = new Equipment();
 
 
         public void ApplyDamage(int damage)
         {
-            Health -= damage;
+            CurrentHealth -= damage;
 
-            if (Health <= 0)
+            if (CurrentHealth <= 0)
             {
                 // Die
                 OnDeath();
