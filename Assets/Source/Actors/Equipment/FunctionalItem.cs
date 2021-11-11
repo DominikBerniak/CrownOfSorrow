@@ -9,16 +9,12 @@ namespace DungeonCrawl.Actors.Characters
             "dupa", "dupa2", "dupa3"
         };
         
-        public override void UseItem(Player player, int dupa)
+        public override void UseItem()
         {
         }
         
         public override int DefaultSpriteId => 110;
         public override string DefaultName => "Door";
         
-        public override void SetName()
-        {
-            Name = Names[Utilities.Random.Next(Names.Count)];
-        }
     }
 }

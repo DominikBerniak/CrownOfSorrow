@@ -1,4 +1,6 @@
-﻿using DungeonCrawl.Core;
+﻿using Assets.Source.Core;
+using DungeonCrawl.Actors.Experience;
+using DungeonCrawl.Core;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
@@ -10,10 +12,19 @@ namespace DungeonCrawl.Actors.Characters
         private bool _isMoving;
 
         private float _timeSinceLastMove;
+
+        private int _baseArmor;
+
+        private int _baseAttackDmg;
+        
         public Player()
         {
-            Health = 100;
-            AttackDmg = 5;
+            Name = "Dominik";
+            Level.Number = 1;
+            MaxHealth = 100;
+            CurrentHealth = MaxHealth;
+            _baseAttackDmg = 0;
+            _baseArmor = 0;
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -35,6 +46,7 @@ namespace DungeonCrawl.Actors.Characters
                 return;
             }
             _timeSinceLastMove += deltaTime;
+            
             // if (!_isMoving && Input.GetMouseButtonDown(0))
             // {
             //     _isMoving = true;
@@ -94,6 +106,14 @@ namespace DungeonCrawl.Actors.Characters
                 TryMove(Direction.Right);
             }
             CameraController.Singleton.Position = Position;
+            UpdatePlayerStats();
+            UserInterface.Singleton.UpdatePlayerInfo(this);
+        }
+
+        public void UpdatePlayerStats()
+        {
+            AttackDmg = _baseAttackDmg + (Equipment.EquippedWeapon != null ? Equipment.EquippedWeapon.StatPower : 0);
+            Armor = _baseArmor + (Equipment.EquippedArmor != null ? Equipment.EquippedArmor.StatPower : 0);
         }
 
         public override bool OnCollision(Actor anotherActor)
@@ -109,9 +129,5 @@ namespace DungeonCrawl.Actors.Characters
 
         public override int DefaultSpriteId => 47;
         public override string DefaultName => "Player";
-
-        public void Dupa()
-        {
-        }
     }
 }
