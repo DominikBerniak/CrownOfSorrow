@@ -139,5 +139,19 @@ namespace DungeonCrawl.Core
             
             return component;
         }
+        
+        public T Spawn<T>(int x, int y, string variantName, string actorName = null, int number = 0) where T : Floor
+        {
+            var go = new GameObject();
+            go.AddComponent<SpriteRenderer>();
+
+            var component = go.AddComponent<T>();
+            component.SetSprite(component.SpriteVariants, variantName);
+            go.name = actorName ?? component.DefaultName;
+            component.Position = (x, y);
+            _allActors.Add(component);
+            
+            return component;
+        }
     }
 }
