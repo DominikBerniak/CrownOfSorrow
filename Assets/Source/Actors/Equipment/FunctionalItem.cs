@@ -8,12 +8,13 @@ namespace DungeonCrawl.Actors.Characters
         {
             "dupa", "dupa2", "dupa3"
         };
-        
-        public override void UseItem()
+
+        public FunctionalItem()
         {
         }
-        
-        public override int DefaultSpriteId => 110;
+
+        public override int DefaultSpriteId { get; set; } = 110;
+
         public override string DefaultName => "Door";
         
     }

@@ -8,9 +8,7 @@ namespace DungeonCrawl.Actors.Characters
         public virtual void UseItem(){}
 
         public Character Owner { get; private set; }
-        
-        public virtual void SetName(){}
-        
+
         public override bool OnCollision(Actor anotherActor)
         {
             if (anotherActor is Player)
@@ -29,10 +27,9 @@ namespace DungeonCrawl.Actors.Characters
 
             return false;
         }
-
-        public override int DefaultSpriteId { get; }
         public override string DefaultName { get; }
-        
+
         public override int Z => -1;
+        public override int DefaultSpriteId { get; set; }
     }
 }

@@ -39,7 +39,6 @@ namespace DungeonCrawl.Core
 
             // Set default camera size and position
             CameraController.Singleton.Size = 6;
-            // CameraController.Singleton.Position = (width / 2, -height / 2);
         }
 
         private static void SpawnActor(char c, (int x, int y) position)
@@ -80,8 +79,10 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Ghost>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
-
-
+                case '?':
+                    ActorManager.Singleton.Spawn<Consumable>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

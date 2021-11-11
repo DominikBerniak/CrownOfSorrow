@@ -4,7 +4,8 @@ namespace DungeonCrawl.Actors.Static
 {
     public class Wall : Actor
     {
-        public override int DefaultSpriteId => 825;
+        public override int DefaultSpriteId { get; set; } = 825;
+
         public override string DefaultName => "Wall";
 
         public Dictionary<string, int> SpriteVariants = new Dictionary<string, int>()
