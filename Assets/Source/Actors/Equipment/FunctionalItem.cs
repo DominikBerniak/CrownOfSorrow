@@ -2,11 +2,13 @@
 {
     public class FunctionalItem : Item
     {
-        private string Name { get; set; }
+        private int ItemId { get; set; }
+        private string Name { get; set;  }
         
-        public FunctionalItem(string name)
+        public FunctionalItem(string Name, int itemId)
         {
-            this.Name = name;
+            this.Name = Name;
+            this.ItemId = itemId;
         }
         
         public override void UseItem(Player player, int dupa)

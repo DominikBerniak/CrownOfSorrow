@@ -2,6 +2,8 @@
 using DungeonCrawl.Actors.Static;
 using System;
 using System.Text.RegularExpressions;
+using DungeonCrawl.Actors;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 
 namespace DungeonCrawl.Core
@@ -51,6 +53,63 @@ namespace DungeonCrawl.Core
                     break;
                 case '~':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "water", String.Empty);
+                    break;
+                case 'Y':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tree", String.Empty);
+                    break;
+                case 'o' :
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "necklace", String.Empty);
+                    break;
+                case 'N':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "fence", String.Empty);
+                    break;
+                case 'y':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tree1", String.Empty);
+                    break;
+                case '/':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "roof1", String.Empty);
+                    break;
+                case '-':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "roof2", String.Empty);
+                    break;
+                case '\\':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "roof3", String.Empty);
+                    break;
+                case 't':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tombstone", String.Empty);
+                    break;
+                case 'f':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "fireplace", String.Empty);
+                    break;
+                case '<':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "roadturn", String.Empty);
+                    break;
+                case 'I':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "horizontalroad", String.Empty);
+                    break;
+                case 'X':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "woodenobstacle", String.Empty);
+                    break;
+                case 'M':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crown", String.Empty);
+                    break;
+                case 'w':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "roadvertical", String.Empty);
+                    break;
+                case 'W':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "roadvertical1", String.Empty);
+                    break;
+                case 'H':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crossup", String.Empty);
+                    break;
+                case 'h':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crossdown", String.Empty);
+                    break;
+                case 'b':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "door2", String.Empty);
+                    break;
+                case 'v':
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "entrance", String.Empty);
                     break;
                 case '.':
                     ActorManager.Singleton.Spawn<Floor>(position);

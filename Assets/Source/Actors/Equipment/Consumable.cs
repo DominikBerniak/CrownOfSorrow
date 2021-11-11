@@ -7,6 +7,7 @@
         public Consumable(string name)
         {
             this.Name = name;
+            
         }
 
         public override void UseItem(Player player, int health)
