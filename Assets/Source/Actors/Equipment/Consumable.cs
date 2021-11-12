@@ -27,8 +27,8 @@ namespace DungeonCrawl.Actors.Characters
             Owner.Equipment.RemoveItem(this);
         }
         
-        public override int DefaultSpriteId { get; set; } = 656;
 
+        public override int DefaultSpriteId { get; set; } = 656;
         public override string DefaultName => "Consumable";
     }
 }

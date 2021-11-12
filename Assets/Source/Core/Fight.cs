@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Assets.Source.Core;
 using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
