@@ -4,8 +4,6 @@ namespace DungeonCrawl.Actors.Characters
 {
     public class Consumable: Item
     {
-
-
         private List<string> Names = new List<string>()
         {
             "Dragon Blood Potion", "Angelic Tears Potion", "Irinian Water Potion","Orc Urine","Health Potion"

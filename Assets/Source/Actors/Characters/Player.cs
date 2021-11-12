@@ -24,16 +24,11 @@ namespace DungeonCrawl.Actors.Characters
             Name = ActorManager.Singleton.PlayerName;
             //for demo
             Level.Number = 1;
-            MaxHealth = 1000;
+            Level.Number = 1;
+            MaxHealth = 100;
             CurrentHealth = MaxHealth;
-            _baseAttackDmg = 100;
-            _baseArmor = 100;
-            
-            // Level.Number = 1;
-            // MaxHealth = 100;
-            // CurrentHealth = MaxHealth;
-            // _baseAttackDmg = Utilities.Random.Next(5,11);
-            // _baseArmor = 0;
+            _baseAttackDmg = Utilities.Random.Next(5,11);
+            _baseArmor = 0;
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -113,6 +108,14 @@ namespace DungeonCrawl.Actors.Characters
             {
                 // Move right
                 TryMove(Direction.Right);
+            }
+
+            if (Input.GetKeyDown(KeyCode.End))
+            {
+                MaxHealth = 1000;
+                CurrentHealth = MaxHealth;
+                _baseAttackDmg = 100;
+                _baseArmor = 100;
             }
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
