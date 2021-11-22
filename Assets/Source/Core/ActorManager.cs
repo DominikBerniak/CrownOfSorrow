@@ -78,10 +78,10 @@ namespace DungeonCrawl.Core
 
             foreach (var actor in actors)
             {
-                if (!(actor is Player))
+                if (actor.IsDestroyable)
                 {
                     DestroyActor(actor);
-                }    
+                }
             }
         }
 

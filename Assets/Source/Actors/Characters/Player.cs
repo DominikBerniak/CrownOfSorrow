@@ -22,18 +22,12 @@ namespace DungeonCrawl.Actors.Characters
         public Player()
         {
             Name = ActorManager.Singleton.PlayerName;
-            //for demo
             Level.Number = 1;
-            MaxHealth = 1000;
+            MaxHealth = 100;
             CurrentHealth = MaxHealth;
-            _baseAttackDmg = 100;
-            _baseArmor = 100;
-            
-            // Level.Number = 1;
-            // MaxHealth = 100;
-            // CurrentHealth = MaxHealth;
-            // _baseAttackDmg = Utilities.Random.Next(5,11);
-            // _baseArmor = 0;
+            _baseAttackDmg = Utilities.Random.Next(5,11);
+            _baseArmor = 0;
+            IsDestroyable = false;
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -53,43 +47,6 @@ namespace DungeonCrawl.Actors.Characters
             if (PauseControl.Singleton.IsGamePaused)
             {
                 return;
-            }
-            _timeSinceLastMove += deltaTime;
-            
-            if (!_isMoving && Input.GetMouseButtonDown(0))
-            {
-                _isMoving = true;
-                var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var targetX = (int)Math.Round(mousePos.x);
-                var targetY = (int)Math.Round(mousePos.y);
-                _targetPosition = (targetX, targetY);
-            }
-            
-            if (_isMoving && _timeSinceLastMove > 0.2f)
-            {
-                _timeSinceLastMove = 0;
-                if (Position.x > _targetPosition.Item1)
-                {
-                    TryMove(Direction.Left);
-                }
-            
-                else if (Position.x < _targetPosition.Item1)
-                {
-                    TryMove(Direction.Right);
-                }
-            
-                else if (Position.y > _targetPosition.Item2)
-                {
-                    TryMove(Direction.Down);
-                }
-                else if (Position.y < _targetPosition.Item2)
-                {
-                    TryMove(Direction.Up);
-                }
-                else
-                {
-                    _isMoving = false;
-                }
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -114,6 +71,13 @@ namespace DungeonCrawl.Actors.Characters
                 // Move right
                 TryMove(Direction.Right);
             }
+
+            if (Input.GetKeyDown(KeyCode.Home))
+            {
+                CurrentHealth = MaxHealth;
+                _baseAttackDmg = 100;
+            }
+            
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
             UserInterface.Singleton.UpdatePlayerInfo(this);

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class EquipmentItemSlot : MonoBehaviour
 {
     public Image itemImage;
-    public GameObject ItemInfoUi;
+    public GameObject itemInfoUi;
     Item _item;
 
     public void AddItem(Item newItem)
@@ -28,37 +28,37 @@ public class EquipmentItemSlot : MonoBehaviour
 
     public void UseItem()
     {
-        if (_item != null)
+        if (_item == null)
         {
-            _item.UseItem();
-            ClearSlot();
-            if (Fight.Singleton.isFighting)
-            {
-                Fight.Singleton.isUsingItem = false;
-                Fight.Singleton.isAfterAttack = true;
-                UserInterface.Singleton.HideUseItemUi();
-                return;
-            }
-            UserInterface.Singleton.UpdateEquipment();    
-
+            return;
         }
+        _item.UseItem();
+        ClearSlot();
+        if (Fight.Singleton.isFighting)
+        {
+            Fight.Singleton.isUsingItem = false;
+            Fight.Singleton.isAfterAttack = true;
+            UserInterface.Singleton.HideUseItemUi();
+            return;
+        }
+        UserInterface.Singleton.UpdateEquipment();
     }
 
     public void ShowItemInfo()
     {
         if (_item != null)
         {
-            ItemInfoUi.SetActive(true);
-            var itemInfoImage = ItemInfoUi.transform.Find("ItemSlot/ItemImage").GetComponent<Image>();
+            itemInfoUi.SetActive(true);
+            var itemInfoImage = itemInfoUi.transform.Find("ItemSlot/ItemImage").GetComponent<Image>();
             itemInfoImage.sprite = _item.GetSprite();
             itemInfoImage.enabled = true;
-            ItemInfoUi.transform.Find("ItemName").GetComponent<TextMeshProUGUI>().text = _item.Name;
-            ItemInfoUi.transform.Find("ItemStats").GetComponent<TextMeshProUGUI>().text = $"{_item.StatName} : {_item.StatPower}";
+            itemInfoUi.transform.Find("ItemName").GetComponent<TextMeshProUGUI>().text = _item.Name;
+            itemInfoUi.transform.Find("ItemStats").GetComponent<TextMeshProUGUI>().text = $"{_item.StatName} : {_item.StatPower}";
         }
     }
 
     public void HideItemInfo()
     {
-        ItemInfoUi.SetActive(false);
+        itemInfoUi.SetActive(false);
     }
 }
