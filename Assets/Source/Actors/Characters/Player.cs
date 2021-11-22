@@ -19,6 +19,9 @@ namespace DungeonCrawl.Actors.Characters
 
         private int _baseAttackDmg;
         
+        public override int DefaultSpriteId { get; set; } = 26;
+        public override string DefaultName => "Player";
+        
         public Player()
         {
             Name = ActorManager.Singleton.PlayerName;
@@ -80,6 +83,7 @@ namespace DungeonCrawl.Actors.Characters
             
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
+            UpdatePlayerSprite();
             UserInterface.Singleton.UpdatePlayerInfo(this);
         }
 
@@ -87,6 +91,25 @@ namespace DungeonCrawl.Actors.Characters
         {
             AttackDmg = _baseAttackDmg + (Equipment.EquippedWeapon != null ? Equipment.EquippedWeapon.StatPower : 0);
             Armor = _baseArmor + (Equipment.EquippedArmor != null ? Equipment.EquippedArmor.StatPower : 0);
+        }
+
+        private void UpdatePlayerSprite()
+        {
+            switch (GetEquippedItems())
+            {
+                case EquippedItems.None:
+                    SetSprite(24);
+                    break;
+                case EquippedItems.Weapon:
+                    SetSprite(26);
+                    break;
+                case EquippedItems.Armor:
+                    SetSprite(29);
+                    break;
+                case EquippedItems.ArmorAndWeapon:
+                    SetSprite(27);
+                    break;
+            }
         }
 
         public override bool OnCollision(Actor anotherActor)
@@ -99,8 +122,29 @@ namespace DungeonCrawl.Actors.Characters
         {
         }
 
-        public override int DefaultSpriteId { get; set; } = 26;
-        public override string DefaultName => "Player";
+        private EquippedItems GetEquippedItems()
+        {
+            if (Equipment.IsArmorEquipped() && Equipment.IsWeaponEquipped())
+            {
+                return EquippedItems.ArmorAndWeapon;
+            }
+            if (Equipment.IsArmorEquipped())
+            {
+                return EquippedItems.Armor;
+            }
+            if (Equipment.IsWeaponEquipped())
+            {
+                return EquippedItems.Weapon;
+            }
 
+            return EquippedItems.None;
+        }
+        enum EquippedItems
+        {
+            None,
+            Armor,
+            Weapon,
+            ArmorAndWeapon
+        }
     }
 }

@@ -115,8 +115,6 @@ namespace DungeonCrawl.Actors.Characters
 
         public override int DefaultSpriteId { get; set; } = 313;
         public override string DefaultName => "Ghost";
-
-
     }
 }
 
