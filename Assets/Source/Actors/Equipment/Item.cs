@@ -20,6 +20,7 @@ namespace DungeonCrawl.Actors.Characters
                 }
                 player.Equipment.AddItem(this);
                 Owner = player;
+                IsDestroyable = false;
                 SetSpriteVisible(false);
                 Detectable = false;
                 return true;

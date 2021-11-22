@@ -76,14 +76,14 @@ namespace Source.Core
                 if (!isUsingItem)
                 {
                     AttackButton.gameObject.SetActive(currentFighter == player);
-                    UseItemButton.gameObject.SetActive(currentFighter == player);   
+                    UseItemButton.gameObject.SetActive(currentFighter == player);
                     if (!CheckForUsableItems(player.Equipment))
                     {
                         UseItemButton.interactable = false;
                     }
                     else
                     {
-                        UseItemButton.interactable = true;   
+                        UseItemButton.interactable = true;
                     }
                 }
                 if (currentFighter != player)

@@ -56,6 +56,7 @@ namespace Assets.Source.Core
         public EquipmentItemSlot equippedArmor;
 
         public GameObject usableItemsGrid;
+        
         public EquipmentItemSlot[] usableItems;
         
         public bool IsFightScreenOn;

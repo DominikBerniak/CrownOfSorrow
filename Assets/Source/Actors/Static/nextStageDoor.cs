@@ -26,27 +26,24 @@ namespace DungeonCrawl.Actors.Static
             {
                 foreach (Item element in ((Player) anotherActor).Equipment.Items)
                 {
-                    if (element is FunctionalItem)
+                    if (element is FunctionalItem && ItemId == ((FunctionalItem) element).ItemId)
                     {
-                        if (ItemId == ((FunctionalItem) element).ItemId)
+                        switch (ItemId)
                         {
-                            switch (ItemId)
-                            {
-                                case 1:
-                                    SetSprite(SpriteVariants, "openedBlueDoor");
-                                   // ((Player) anotherActor).Equipment.RemoveItem(element);
-                                    Detectable = false;
-                                    return true;
-                                case 2:
-                                    SetSprite(SpriteVariants, "openedRedDoor");
-                                  // ((Player) anotherActor).Equipment.RemoveItem(element);
-                                    Detectable = false;
-                                    return true;
-                                case 3:
-                                    ActorManager.Singleton.DestroyActor(this);
-                                   // ((Player) anotherActor).Equipment.RemoveItem(element);
-                                    break;
-                            }
+                            case 1:
+                                SetSprite(SpriteVariants, "openedBlueDoor");
+                               // ((Player) anotherActor).Equipment.RemoveItem(element);
+                                Detectable = false;
+                                return true;
+                            case 2:
+                                SetSprite(SpriteVariants, "openedRedDoor");
+                              // ((Player) anotherActor).Equipment.RemoveItem(element);
+                                Detectable = false;
+                                return true;
+                            case 3:
+                                ActorManager.Singleton.DestroyActor(this);
+                               // ((Player) anotherActor).Equipment.RemoveItem(element);
+                                break;
                         }
                     }
                 }

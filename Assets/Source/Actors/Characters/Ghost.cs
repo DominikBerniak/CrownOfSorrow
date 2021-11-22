@@ -7,8 +7,6 @@ using DungeonCrawl.Actors.Static;
 
 namespace DungeonCrawl.Actors.Characters
 {
-
-
     public class Ghost : Character
     {
         private float DelayCounter { get; set; }
@@ -77,8 +75,6 @@ namespace DungeonCrawl.Actors.Characters
             int ghostX = Position.x;
             int ghostY = Position.y;
             int ghostActivationRadius = 8;
- 
-            
             var playerLocation = GameObject.Find("Player").GetComponent<Player>().Position;
             if (Math.Abs(ghostX - playerLocation.x) <= ghostActivationRadius && Math.Abs(ghostY - playerLocation.y) <= ghostActivationRadius)
             {
