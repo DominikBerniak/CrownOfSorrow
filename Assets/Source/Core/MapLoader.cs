@@ -218,8 +218,6 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Skeleton>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
-                case ' ':
-                    break;
                 case '=':
                     ActorManager.Singleton.Spawn<Door>(position);
                     break;
@@ -231,6 +229,8 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Armor>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
+                case ' ':
+                    break;
                 case ',':
                     ActorManager.Singleton.Spawn<Ghost>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
@@ -238,6 +238,10 @@ namespace DungeonCrawl.Core
                 case '?':
                     ActorManager.Singleton.Spawn<Consumable>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case 'O':
+                    ActorManager.Singleton.Spawn<Mummy>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
