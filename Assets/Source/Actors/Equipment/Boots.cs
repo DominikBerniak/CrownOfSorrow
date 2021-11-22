@@ -2,7 +2,7 @@
 
 namespace DungeonCrawl.Actors.Characters
 {
-    public class Armor : Item
+    public class Boots : Item
     {
         private List<string> Names = new List<string>()
         {
@@ -11,10 +11,10 @@ namespace DungeonCrawl.Actors.Characters
 
         private List<int> SpriteIds = new List<int>()
         {
-            31, 83, 80, 35
+            38, 39
         };
 
-        public Armor()
+        public Boots()
         {
             Name = Names[Utilities.Random.Next(Names.Count)];
             StatName = "Armor";
@@ -24,21 +24,24 @@ namespace DungeonCrawl.Actors.Characters
         
         public override void UseItem()
         {
-            //Owner.Armor += armor;
-            if (Owner.Equipment.EquippedArmor != this)
+            if (Owner.Equipment.EquippedBoots != this)
             {
-                Owner.Equipment.EquippedArmor = this;
+                if (Owner.Equipment.AreBootsEquipped())
+                {
+                    Owner.Equipment.AddItem(Owner.Equipment.EquippedBoots);    
+                }
+                Owner.Equipment.EquippedBoots = this;
                 Owner.Equipment.RemoveItem(this);
             }
             else
             {
-                Owner.Equipment.EquippedArmor = null;
+                Owner.Equipment.EquippedBoots = null;
                 Owner.Equipment.AddItem(this);
             }
         }
         
         public override int DefaultSpriteId { get; set; }
 
-        public override string DefaultName => "Armor";
+        public override string DefaultName => "Boots";
     }
 }

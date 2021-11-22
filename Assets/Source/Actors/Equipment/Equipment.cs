@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
 using Assets.Source.Core;
-using UnityEngine;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Equipment
     {
         public List<Item> Items { get; set; } = new List<Item>();
-
-        public Item EquippedWeapon { get; set; }
-        public Item EquippedArmor { get; set; }
+        public Weapon EquippedWeapon { get; set; }
+        
+        public Shield EquippedShield { get; set; }
+        public Helmet EquippedHelmet { get; set; }
+        public ChestArmor EquippedChestArmor { get; set; }
+        public Gloves EquippedGloves { get; set; }
+        public Boots EquippedBoots { get; set; }
+        
 
         public bool IsEquipmentOnScreen;
 
@@ -39,9 +43,70 @@ namespace DungeonCrawl.Actors.Characters
             return !(EquippedWeapon is null);
         }
         
+        public bool IsShieldEquipped()
+        {
+            return !(EquippedShield is null);
+        }
+        
+        public bool IsHelmetEquipped()
+        {
+            return !( EquippedHelmet is null);
+        }
+        
+        public bool IsChestArmorEquipped()
+        {
+            return !( EquippedChestArmor is null);
+        }
+        
+        public bool AreGlovesEquipped()
+        {
+            return !( EquippedGloves is null);
+        }
+        
+        public bool AreBootsEquipped()
+        {
+            return !( EquippedBoots is null);
+        }
+
+        public int GetEquippedWeaponPower()
+        {
+            if (EquippedWeapon is null)
+            {
+                return 0;
+            }
+
+            return EquippedWeapon.StatPower;
+        }
+        
+        public int GetEquippedArmorPower()
+        {
+            int statPowerSum = 0;
+            if (!(EquippedHelmet is null))
+            {
+                statPowerSum += EquippedHelmet.StatPower;
+            }
+            if (!(EquippedChestArmor is null))
+            {
+                statPowerSum += EquippedChestArmor.StatPower;
+            }
+            if (!(EquippedGloves is null))
+            {
+                statPowerSum += EquippedGloves.StatPower;
+            }
+            if (!(EquippedBoots is null))
+            {
+                statPowerSum += EquippedBoots.StatPower;
+            }
+            if (!(EquippedShield is null))
+            {
+                statPowerSum += EquippedShield.StatPower;
+            }
+            return statPowerSum;
+        }
+
         public bool IsArmorEquipped()
         {
-            return !(EquippedArmor is null);
+            return IsHelmetEquipped() || IsChestArmorEquipped() || AreGlovesEquipped() || AreBootsEquipped();
         }
     }
     

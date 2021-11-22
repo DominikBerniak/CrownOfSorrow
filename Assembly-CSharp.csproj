@@ -41,7 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Source\Actors\Equipment\Armor.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\ChestArmor.cs" />
      <Compile Include="Assets\Source\Actors\Static\Wall.cs" />
      <Compile Include="Assets\Source\Core\PauseControl.cs" />
      <Compile Include="Assets\Source\Actors\Static\Floor.cs" />
@@ -56,19 +56,24 @@
      <Compile Include="Assets\Source\Actors\Experience\Level.cs" />
      <Compile Include="Assets\Source\Actors\Experience\Expierience.cs" />
      <Compile Include="Assets\Source\Actors\Characters\Character.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Gloves.cs" />
      <Compile Include="Assets\Source\Actors\Characters\Ghost.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Item.cs" />
      <Compile Include="Assets\Source\Actors\Characters\Skeleton.cs" />
      <Compile Include="Assets\Source\Core\MapLoader.cs" />
      <Compile Include="Assets\Source\Actors\Static\Door.cs" />
+     <Compile Include="Assets\Source\Actors\Characters\Mummy.cs" />
      <Compile Include="Assets\Source\Utilities.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Helmet.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Weapon.cs" />
      <Compile Include="Assets\Source\Core\GameManager.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Equipment.cs" />
      <Compile Include="Assets\Source\Actors\Static\nextStageDoor.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Boots.cs" />
      <Compile Include="Assets\Source\Core\ActorManager.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Consumable.cs" />
      <Compile Include="Assets\Source\Core\Menu.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Shield.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

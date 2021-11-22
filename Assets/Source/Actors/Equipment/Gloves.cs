@@ -2,47 +2,46 @@
 
 namespace DungeonCrawl.Actors.Characters
 {
-    public class Weapon : Item
+    public class Gloves : Item
     {
         private List<string> Names = new List<string>()
         {
-            "Great Sword of Power", "Long Sword", "Sword", "Great Sword", "One Sword To Rule Them All", "Excalibur"
+            "Great Plate Armor", "Amazing Cloth Armor", "Broken Cloth Armor", "Cloth Armor", "Plate Armor", "Light Armor"
         };
 
         private List<int> SpriteIds = new List<int>()
         {
-            319, 320, 321, 322, 323, 367, 368, 369, 370, 371,
-            415, 416, 417, 418, 419
+            40, 41
         };
 
-        public Weapon()
+        public Gloves()
         {
             Name = Names[Utilities.Random.Next(Names.Count)];
-            StatName = "Attack";
+            StatName = "Armor";
             StatPower = Utilities.Random.Next(1, 16);
             DefaultSpriteId = SpriteIds[Utilities.Random.Next(SpriteIds.Count)];
         }
+        
         public override void UseItem()
         {
-            if (Owner.Equipment.EquippedWeapon != this)
+            if (Owner.Equipment.EquippedGloves != this)
             {
-                if (Owner.Equipment.IsWeaponEquipped())
+                if (Owner.Equipment.AreGlovesEquipped())
                 {
-                    Owner.Equipment.AddItem(Owner.Equipment.EquippedWeapon);    
+                    Owner.Equipment.AddItem(Owner.Equipment.EquippedGloves);    
                 }
-                Owner.Equipment.EquippedWeapon = this;
+                Owner.Equipment.EquippedGloves = this;
                 Owner.Equipment.RemoveItem(this);
             }
             else
             {
-                Owner.Equipment.EquippedWeapon = null;
+                Owner.Equipment.EquippedGloves = null;
                 Owner.Equipment.AddItem(this);
             }
-
         }
-
+        
         public override int DefaultSpriteId { get; set; }
 
-        public override string DefaultName => "Weapon";
+        public override string DefaultName => "Gloves";
     }
 }

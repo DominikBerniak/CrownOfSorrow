@@ -51,7 +51,15 @@ namespace Assets.Source.Core
 
         public EquipmentItemSlot equippedWeapon;
         
-        public EquipmentItemSlot equippedArmor;
+        public EquipmentItemSlot equippedShield;
+        
+        public EquipmentItemSlot equippedHelmet;
+        
+        public EquipmentItemSlot equippedChestArmor;
+        
+        public EquipmentItemSlot equippedGloves;
+        
+        public EquipmentItemSlot equippedBoots;
 
         public GameObject usableItemsGrid;
         
@@ -136,15 +144,31 @@ namespace Assets.Source.Core
                 }
             }
 
-            if (equipment.EquippedWeapon != null)
+            if (equipment.IsWeaponEquipped())
             {
                 equippedWeapon.AddItem(equipment.EquippedWeapon);
             }
-            if (equipment.EquippedArmor != null)
+            if (equipment.IsShieldEquipped())
             {
-                equippedArmor.AddItem(equipment.EquippedArmor);
+                equippedShield.AddItem(equipment.EquippedShield);
+            }
+            if (equipment.IsHelmetEquipped())
+            {
+                equippedHelmet.AddItem(equipment.EquippedHelmet);
             }
             
+            if (equipment.IsChestArmorEquipped())
+            {
+                equippedChestArmor.AddItem(equipment.EquippedChestArmor);
+            }
+            if (equipment.AreGlovesEquipped())
+            {
+                equippedGloves.AddItem(equipment.EquippedGloves);
+            }
+            if (equipment.AreBootsEquipped())
+            {
+                equippedBoots.AddItem(equipment.EquippedBoots);
+            }
         }
 
         public void UpdateEquipment()

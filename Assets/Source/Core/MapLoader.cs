@@ -225,8 +225,24 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Weapon>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
+                case '|':
+                    ActorManager.Singleton.Spawn<Shield>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
                 case '}':
-                    ActorManager.Singleton.Spawn<Armor>(position);
+                    ActorManager.Singleton.Spawn<ChestArmor>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case '{':
+                    ActorManager.Singleton.Spawn<Helmet>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case '(':
+                    ActorManager.Singleton.Spawn<Gloves>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
+                    break;
+                case '^':
+                    ActorManager.Singleton.Spawn<Boots>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
                 case ' ':

@@ -89,8 +89,8 @@ namespace DungeonCrawl.Actors.Characters
 
         public void UpdatePlayerStats()
         {
-            AttackDmg = _baseAttackDmg + (Equipment.EquippedWeapon != null ? Equipment.EquippedWeapon.StatPower : 0);
-            Armor = _baseArmor + (Equipment.EquippedArmor != null ? Equipment.EquippedArmor.StatPower : 0);
+            AttackDmg = _baseAttackDmg + Equipment.GetEquippedWeaponPower();
+            Armor = _baseArmor + Equipment.GetEquippedArmorPower();
         }
 
         private void UpdatePlayerSprite()
