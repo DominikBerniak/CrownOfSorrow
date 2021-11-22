@@ -12,6 +12,7 @@ namespace Source.Core
     {
         public Button AttackButton;
         public Button UseItemButton;
+        public Button ExitUseItemButton;
         public GameObject FightUi;
         public bool isFighting;
         public bool isAfterAttack;
@@ -159,7 +160,16 @@ namespace Source.Core
             AttackButton.gameObject.SetActive(false);
             UseItemButton.onClick.RemoveAllListeners();
             UseItemButton.gameObject.SetActive(false);
+            ExitUseItemButton.gameObject.SetActive(true);
             UserInterface.Singleton.ShowUseItemUi(player);
+        }
+
+        public void ExitUsingItem()
+        {
+            UserInterface.Singleton.HideUseItemUi();
+            ExitUseItemButton.gameObject.SetActive(false);
+            isUsingItem = false;
+            isFighting = false;
         }
         private void SwapFighters(ref Character currentFighter, ref Character oppositeFighter, Player player, Character monster)
         {

@@ -38,6 +38,7 @@ public class EquipmentItemSlot : MonoBehaviour
         {
             Fight.Singleton.isUsingItem = false;
             Fight.Singleton.isAfterAttack = true;
+            Fight.Singleton.ExitUseItemButton.gameObject.SetActive(false);
             UserInterface.Singleton.HideUseItemUi();
             return;
         }

@@ -27,12 +27,21 @@ namespace DungeonCrawl.Actors.Characters
         {
             IsEquipmentOnScreen = true;
             UserInterface.Singleton.ShowEquipment(this);
-            
         }
         public void HideEquipment()
         {
             IsEquipmentOnScreen = false;
             UserInterface.Singleton.HideEquipment();
+        }
+
+        public bool IsWeaponEquipped()
+        {
+            return !(EquippedWeapon is null);
+        }
+        
+        public bool IsArmorEquipped()
+        {
+            return !(EquippedArmor is null);
         }
     }
     

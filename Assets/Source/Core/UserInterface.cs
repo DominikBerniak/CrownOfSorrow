@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using DungeonCrawl;
+﻿using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Core;
 using Source.Core;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.Source.Core
