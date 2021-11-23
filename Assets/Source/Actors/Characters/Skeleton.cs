@@ -30,13 +30,14 @@ namespace DungeonCrawl.Actors.Characters
             {
                 Player player = (Player) anotherActor;
                 UserInterface.Singleton.ShowFightScreen(player, this);
-                return CurrentHealth <= 0;
+                // return CurrentHealth <= 0;
             }
             return false;
         }
 
        protected override void OnDeath()
         {
+            DropItem();
             Debug.Log("Well, I was already dead anyway...");
         }
 

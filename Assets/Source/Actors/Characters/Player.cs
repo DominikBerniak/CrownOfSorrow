@@ -35,7 +35,11 @@ namespace DungeonCrawl.Actors.Characters
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.I) && !UserInterface.Singleton.IsFightScreenOn)
+            if (Input.GetKeyDown(KeyCode.Escape) && !UserInterface.Singleton.IsFightScreenOn)
+            {
+                UserInterface.Singleton.TogglePauseMenu();
+            }
+            if (Input.GetKeyDown(KeyCode.I) && !UserInterface.Singleton.IsFightScreenOn && !UserInterface.Singleton.IsPauseMenuOn)
             {
                 // Show / hide equipment
                 if (Equipment.IsEquipmentOnScreen)
@@ -80,7 +84,7 @@ namespace DungeonCrawl.Actors.Characters
                 CurrentHealth = MaxHealth;
                 _baseAttackDmg = 100;
             }
-            
+
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
             UpdatePlayerSprite();
@@ -109,13 +113,16 @@ namespace DungeonCrawl.Actors.Characters
                 case EquippedItems.ArmorAndWeapon:
                     SetSprite(27);
                     break;
+                case EquippedItems.ChristmasTree:
+                    SetSprite(47);
+                    break;
             }
         }
 
         public override bool OnCollision(Actor anotherActor)
         {
             UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
-            return CurrentHealth <= 0;
+            return false;
         }
 
         protected override void OnDeath()
@@ -124,6 +131,10 @@ namespace DungeonCrawl.Actors.Characters
 
         private EquippedItems GetEquippedItems()
         {
+            if (Equipment.IsChristmasTreeEquipped())
+            {
+                return EquippedItems.ChristmasTree;
+            }
             if (Equipment.IsArmorEquipped() && Equipment.IsWeaponEquipped())
             {
                 return EquippedItems.ArmorAndWeapon;
@@ -144,7 +155,8 @@ namespace DungeonCrawl.Actors.Characters
             None,
             Armor,
             Weapon,
-            ArmorAndWeapon
+            ArmorAndWeapon,
+            ChristmasTree
         }
     }
 }

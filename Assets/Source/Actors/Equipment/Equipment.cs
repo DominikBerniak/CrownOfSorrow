@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Source.Core;
 
 namespace DungeonCrawl.Actors.Characters
@@ -10,7 +11,7 @@ namespace DungeonCrawl.Actors.Characters
         
         public Shield EquippedShield { get; set; }
         public Helmet EquippedHelmet { get; set; }
-        public ChestArmor EquippedChestArmor { get; set; }
+        public Item EquippedChestArmor { get; set; }
         public Gloves EquippedGloves { get; set; }
         public Boots EquippedBoots { get; set; }
         
@@ -85,7 +86,7 @@ namespace DungeonCrawl.Actors.Characters
             {
                 statPowerSum += EquippedHelmet.StatPower;
             }
-            if (!(EquippedChestArmor is null))
+            if (!(EquippedChestArmor is null) && !(EquippedChestArmor is ChristmasTree))
             {
                 statPowerSum += EquippedChestArmor.StatPower;
             }
@@ -107,6 +108,34 @@ namespace DungeonCrawl.Actors.Characters
         public bool IsArmorEquipped()
         {
             return IsHelmetEquipped() || IsChestArmorEquipped() || AreGlovesEquipped() || AreBootsEquipped();
+        }
+
+        public bool IsChristmasTreeEquipped()
+        {
+            return EquippedChestArmor is ChristmasTree;
+        }
+        
+        public ItemTypes GetRandomItemType()
+        {
+            var randomChance = Utilities.Random.Next(100);
+            if (randomChance >= 35)
+            {
+                return ItemTypes.Consumable;
+            }
+            var itemTypesValues = Enum.GetValues(typeof(ItemTypes));
+            ItemTypes randomType = (ItemTypes) itemTypesValues.GetValue(Utilities.Random.Next(itemTypesValues.Length));
+            return randomType;
+        }
+
+        public enum ItemTypes
+        {
+            Helmet,
+            Chest,
+            Gloves,
+            Boots,
+            Weapon,
+            Shield,
+            Consumable
         }
     }
     

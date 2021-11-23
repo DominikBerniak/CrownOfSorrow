@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.InteropServices;
+
 namespace DungeonCrawl.Actors.Characters
 {
     public class Item : Actor

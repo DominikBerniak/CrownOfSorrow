@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -17,6 +18,7 @@ namespace DungeonCrawl.Actors.Characters
         }
         public override void UseItem()
         {
+            AudioManager.Singleton.PlayElixirDrinkSound();
             if(Owner.CurrentHealth + StatPower >= Owner.MaxHealth)
             {
                 Owner.CurrentHealth = Owner.MaxHealth;

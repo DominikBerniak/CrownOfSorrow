@@ -63,6 +63,7 @@
      <Compile Include="Assets\Source\Core\MapLoader.cs" />
      <Compile Include="Assets\Source\Actors\Static\Door.cs" />
      <Compile Include="Assets\Source\Actors\Characters\Mummy.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\Shield.cs" />
      <Compile Include="Assets\Source\Utilities.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Helmet.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Weapon.cs" />
@@ -73,7 +74,9 @@
      <Compile Include="Assets\Source\Core\ActorManager.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Consumable.cs" />
      <Compile Include="Assets\Source\Core\Menu.cs" />
-     <Compile Include="Assets\Source\Actors\Equipment\Shield.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\RandomNameGenerator.cs" />
+     <Compile Include="Assets\Source\Core\AudioManager.cs" />
+     <Compile Include="Assets\Source\Actors\Equipment\ChristmasTree.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

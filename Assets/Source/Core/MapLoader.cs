@@ -18,6 +18,7 @@ namespace DungeonCrawl.Core
         public static void LoadMap()
         {
             ActorManager.Singleton.DestroyAllActorsExceptPlayer();
+            AudioManager.Singleton.PlayBackgroundMusic();
             var lines = Regex.Split(Resources.Load<TextAsset>($"map_{CurrentMapId}").text, "\r\n|\r|\n");
 
             // Read map size from the first line
@@ -258,6 +259,10 @@ namespace DungeonCrawl.Core
                 case 'O':
                     ActorManager.Singleton.Spawn<Mummy>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+                case 'E':
+                    ActorManager.Singleton.Spawn<ChristmasTree>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
