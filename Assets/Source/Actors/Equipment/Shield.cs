@@ -1,4 +1,6 @@
-﻿namespace DungeonCrawl.Actors.Characters
+﻿using DungeonCrawl.Core;
+
+namespace DungeonCrawl.Actors.Characters
 {
     public class Shield : Item
     {
@@ -25,6 +27,7 @@
                 }
                 Owner.Equipment.EquippedShield = this;
                 Owner.Equipment.RemoveItem(this);
+                AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {

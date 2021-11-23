@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -29,6 +30,7 @@ namespace DungeonCrawl.Actors.Characters
                 }
                 Owner.Equipment.EquippedWeapon = this;
                 Owner.Equipment.RemoveItem(this);
+                AudioManager.Singleton.PlayWeaponEquippedSound();
             }
             else
             {

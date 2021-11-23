@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
 {
@@ -21,9 +22,10 @@ namespace DungeonCrawl.Actors.Characters
                 {
                     return false;
                 }
+                AudioManager.Singleton.PlayItemPickedUpSound();
                 player.Equipment.AddItem(this);
                 Owner = player;
-                IsDestroyable = false;
+                IsDestructible = false;
                 SetSpriteVisible(false);
                 Detectable = false;
                 return true;

@@ -1,4 +1,6 @@
-﻿namespace DungeonCrawl.Actors.Characters
+﻿using DungeonCrawl.Core;
+
+namespace DungeonCrawl.Actors.Characters
 {
     public class ChestArmor : Item
     {
@@ -24,8 +26,14 @@
                 {
                     Owner.Equipment.AddItem(Owner.Equipment.EquippedChestArmor);    
                 }
+
+                if (Owner.Equipment.EquippedChestArmor is ChristmasTree)
+                {
+                    AudioManager.Singleton.PlayBackgroundMusic();
+                }
                 Owner.Equipment.EquippedChestArmor = this;
                 Owner.Equipment.RemoveItem(this);
+                AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {

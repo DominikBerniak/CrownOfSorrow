@@ -1,4 +1,5 @@
-﻿using DungeonCrawl;
+﻿using System;
+using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Core;
 using Source.Core;
@@ -223,6 +224,8 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
             if (player.CurrentHealth <= 0)
             {
                 fightResultMessage.GetComponent<TextMeshProUGUI>().text = $"DEFEAT!\n You have been defeated by {monster.Name}";
+                AudioManager.Singleton.StopBackgroundMusic();
+                AudioManager.Singleton.PlayGameOverSound();
             }
             else
             {
@@ -282,6 +285,8 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
 
         public void MuteSound()
         {
+            var muteTextObject = PauseMenu.transform.Find("MuteSoundButton").GetComponentInChildren<TextMeshProUGUI>();
+            muteTextObject.text = muteTextObject.text == "MUTE SOUND" ? "UNMUTE SOUND" : "MUTE SOUND";
             AudioManager.Singleton.ToggleSoundMute();
         }
     }

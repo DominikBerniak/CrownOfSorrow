@@ -31,6 +31,10 @@ namespace DungeonCrawl.Actors.Characters
             if (anotherActor is Player)
             {
                 Player player = (Player) anotherActor;
+                if (player.IsChristmasTreeEquipped())
+                {
+                    return true;
+                }
                 UserInterface.Singleton.ShowFightScreen(player, this);
             }
             return false;

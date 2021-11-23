@@ -32,11 +32,12 @@ namespace DungeonCrawl.Actors.Characters
             CurrentHealth = MaxHealth;
             _baseAttackDmg = Utilities.Random.Next(5, 11);
             _baseArmor = 0;
-            IsDestroyable = false;
+            IsDestructible = false;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
+            UpdatePlayerSprite();
             if (Input.GetKeyDown(KeyCode.Escape) && !UserInterface.Singleton.IsFightScreenOn)
             {
                 UserInterface.Singleton.TogglePauseMenu();
@@ -86,10 +87,14 @@ namespace DungeonCrawl.Actors.Characters
                 CurrentHealth = MaxHealth;
                 _baseAttackDmg = 100;
             }
+            
+            if (Input.GetKeyDown(KeyCode.End))
+            {
+                CurrentHealth = 1;
+            }
 
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
-            UpdatePlayerSprite();
             UserInterface.Singleton.UpdatePlayerInfo(this);
         }
 
@@ -123,12 +128,17 @@ namespace DungeonCrawl.Actors.Characters
 
         public override bool OnCollision(Actor anotherActor)
         {
+            if (IsChristmasTreeEquipped())
+            {
+                return true;
+            }
             UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
             return false;
         }
 
         protected override void OnDeath()
         {
+            AudioManager.Singleton.PlayPlayerDeathSound();
         }
 
         private EquippedItems GetEquippedItems()
@@ -152,6 +162,12 @@ namespace DungeonCrawl.Actors.Characters
 
             return EquippedItems.None;
         }
+
+        public bool IsChristmasTreeEquipped()
+        {
+            return Equipment.IsChristmasTreeEquipped();
+        }
+        
         enum EquippedItems
         {
             None,

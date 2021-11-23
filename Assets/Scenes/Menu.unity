@@ -1768,6 +1768,7 @@ GameObject:
   - component: {fileID: 1938041178}
   - component: {fileID: 1938041177}
   - component: {fileID: 1938041179}
+  - component: {fileID: 1938041180}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -1850,6 +1851,18 @@ MonoBehaviour:
   StartGameButton: {fileID: 1568503060}
   QuitGameButton: {fileID: 746129321}
   PlayerNameUi: {fileID: 1540457}
+--- !u!114 &1938041180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938041175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c8d9ffe3670411a8495c30845bf1f92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2020205016
 GameObject:
   m_ObjectHideFlags: 0

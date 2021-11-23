@@ -72,13 +72,13 @@ namespace DungeonCrawl.Core
         /// <summary>
         ///     Used for cleaning up the scene before loading a new map
         /// </summary>
-        public void DestroyAllActorsExceptPlayer()
+        public void DestroyAllDestructibleActors()
         {
             var actors = _allActors.ToArray();
 
             foreach (var actor in actors)
             {
-                if (actor.IsDestroyable)
+                if (actor.IsDestructible)
                 {
                     DestroyActor(actor);
                 }
@@ -188,7 +188,7 @@ namespace DungeonCrawl.Core
             return component;
         }
 
-        public T Spawn<T>(int x, int y, string variantName, string actorName = null, int number = 0, int secondNumber = 0, int thirdNumber = 0) where T : NextStageDoor
+        public T Spawn<T>(int x, int y, string variantName, string actorName = null, int number = 0, int secondNumber = 0, int thirdNumber = 0) where T : ClosedDoor
         {
             var go = new GameObject();
             go.AddComponent<SpriteRenderer>();
