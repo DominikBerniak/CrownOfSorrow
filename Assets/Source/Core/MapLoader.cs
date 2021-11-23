@@ -264,6 +264,11 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<ChristmasTree>(position);
                     ActorManager.Singleton.Spawn<Floor>(position);
                     break;
+                case '0':
+                    ActorManager.Singleton.Spawn<Healer>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

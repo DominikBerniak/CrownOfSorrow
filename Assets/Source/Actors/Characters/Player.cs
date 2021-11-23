@@ -18,17 +18,19 @@ namespace DungeonCrawl.Actors.Characters
         private int _baseArmor;
 
         private int _baseAttackDmg;
-        
+
+
         public override int DefaultSpriteId { get; set; } = 26;
         public override string DefaultName => "Player";
-        
+
+
         public Player()
         {
             Name = ActorManager.Singleton.PlayerName;
             Level.Number = 1;
             MaxHealth = 100;
             CurrentHealth = MaxHealth;
-            _baseAttackDmg = Utilities.Random.Next(5,11);
+            _baseAttackDmg = Utilities.Random.Next(5, 11);
             _baseArmor = 0;
             IsDestroyable = false;
         }
@@ -44,11 +46,11 @@ namespace DungeonCrawl.Actors.Characters
                 // Show / hide equipment
                 if (Equipment.IsEquipmentOnScreen)
                 {
-                    Equipment.HideEquipment();    
+                    Equipment.HideEquipment();
                 }
                 else
                 {
-                    Equipment.ShowEquipment();    
+                    Equipment.ShowEquipment();
                 }
             }
             if (PauseControl.Singleton.IsGamePaused)
@@ -60,19 +62,19 @@ namespace DungeonCrawl.Actors.Characters
                 // Move up
                 TryMove(Direction.Up);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.S))
             {
                 // Move down
                 TryMove(Direction.Down);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.A))
             {
                 // Move left
                 TryMove(Direction.Left);
             }
-            
+
             if (Input.GetKeyDown(KeyCode.D))
             {
                 // Move right
