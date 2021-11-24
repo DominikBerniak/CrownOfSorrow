@@ -186,7 +186,6 @@ namespace Source.Core
                     return true;
                 }
             }
-
             return false;
         }
     }

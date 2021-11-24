@@ -1,25 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Helmet : Item
     {
-        private List<string> Names = new List<string>()
-        {
-            "Great Plate Armor", "Amazing Cloth Armor", "Broken Cloth Armor", "Cloth Armor", "Plate Armor", "Light Armor"
-        };
+        private string[] _typeNames = {"Helmet", "Helmet","Crown"};
 
-        private List<int> SpriteIds = new List<int>()
-        {
-            31, 32, 33, 34, 35
-        };
+        private int[] _spriteIds = {31, 32, 33, 34, 35};
 
         public Helmet()
         {
-            Name = Names[Utilities.Random.Next(Names.Count)];
+            var typeName = _typeNames[Utilities.Random.Next(_typeNames.Length)];
+            Name = RandomNameGenerator.Singleton.GenerateName(typeName);
             StatName = "Armor";
             StatPower = Utilities.Random.Next(1, 16);
-            DefaultSpriteId = SpriteIds[Utilities.Random.Next(SpriteIds.Count)];
+            DefaultSpriteId = _spriteIds[Utilities.Random.Next(_spriteIds.Length)];
         }
         
         public override void UseItem()
@@ -32,6 +27,7 @@ namespace DungeonCrawl.Actors.Characters
                 }
                 Owner.Equipment.EquippedHelmet = this;
                 Owner.Equipment.RemoveItem(this);
+                AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {

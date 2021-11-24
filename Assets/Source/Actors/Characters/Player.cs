@@ -32,12 +32,17 @@ namespace DungeonCrawl.Actors.Characters
             CurrentHealth = MaxHealth;
             _baseAttackDmg = Utilities.Random.Next(5, 11);
             _baseArmor = 0;
-            IsDestroyable = false;
+            IsDestructible = false;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.I) && !UserInterface.Singleton.IsFightScreenOn)
+            UpdatePlayerSprite();
+            if (Input.GetKeyDown(KeyCode.Escape) && !UserInterface.Singleton.IsFightScreenOn)
+            {
+                UserInterface.Singleton.TogglePauseMenu();
+            }
+            if (Input.GetKeyDown(KeyCode.I) && !UserInterface.Singleton.IsFightScreenOn && !UserInterface.Singleton.IsPauseMenuOn)
             {
                 // Show / hide equipment
                 if (Equipment.IsEquipmentOnScreen)
@@ -82,10 +87,14 @@ namespace DungeonCrawl.Actors.Characters
                 CurrentHealth = MaxHealth;
                 _baseAttackDmg = 100;
             }
+            
+            if (Input.GetKeyDown(KeyCode.End))
+            {
+                CurrentHealth = 1;
+            }
 
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
-            UpdatePlayerSprite();
             UserInterface.Singleton.UpdatePlayerInfo(this);
         }
 
@@ -111,6 +120,9 @@ namespace DungeonCrawl.Actors.Characters
                 case EquippedItems.ArmorAndWeapon:
                     SetSprite(27);
                     break;
+                case EquippedItems.ChristmasTree:
+                    SetSprite(47);
+                    break;
             }
         }
 
@@ -129,10 +141,15 @@ namespace DungeonCrawl.Actors.Characters
          
         protected override void OnDeath()
         {
+            AudioManager.Singleton.PlayPlayerDeathSound();
         }
 
         private EquippedItems GetEquippedItems()
         {
+            if (Equipment.IsChristmasTreeEquipped())
+            {
+                return EquippedItems.ChristmasTree;
+            }
             if (Equipment.IsArmorEquipped() && Equipment.IsWeaponEquipped())
             {
                 return EquippedItems.ArmorAndWeapon;
@@ -148,12 +165,19 @@ namespace DungeonCrawl.Actors.Characters
 
             return EquippedItems.None;
         }
+
+        public bool IsChristmasTreeEquipped()
+        {
+            return Equipment.IsChristmasTreeEquipped();
+        }
+        
         enum EquippedItems
         {
             None,
             Armor,
             Weapon,
-            ArmorAndWeapon
+            ArmorAndWeapon,
+            ChristmasTree
         }
     }
 }

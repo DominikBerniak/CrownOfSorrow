@@ -17,7 +17,11 @@ namespace DungeonCrawl.Core
         /// </summary>
         public static void LoadMap()
         {
-            ActorManager.Singleton.DestroyAllActorsExceptPlayer();
+            ActorManager.Singleton.DestroyAllDestructibleActors();
+            if (!AudioManager.Singleton.IsMusicPlaying())
+            {
+                AudioManager.Singleton.PlayBackgroundMusic();    
+            }
             var lines = Regex.Split(Resources.Load<TextAsset>($"map_{CurrentMapId}").text, "\r\n|\r|\n");
 
             // Read map size from the first line
@@ -91,7 +95,7 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "horizontalRoad", "horizontalRoad", 1);
                     break;
                 case 'X':
-                    ActorManager.Singleton.Spawn<NextStageDoor>(position.x, position.y, "redDoor", "redDoor", 1, 1, 1);
+                    ActorManager.Singleton.Spawn<ClosedDoor>(position.x, position.y, "redDoor", "redDoor", 1, 1, 1);
                     break;
                 case 'M':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crown", "crown");
@@ -109,10 +113,10 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crossDown", "crossDown");
                     break;
                 case 'b':
-                    ActorManager.Singleton.Spawn<NextStageDoor>(position.x, position.y, "blueDoor", "blueDoor", 1, 1 ,1);
+                    ActorManager.Singleton.Spawn<ClosedDoor>(position.x, position.y, "blueDoor", "blueDoor", 1, 1 ,1);
                     break;
                 case 'v':
-                    ActorManager.Singleton.Spawn<NextStageDoor>(position.x, position.y, "stoneObstacle", "stoneObstacle", 1, 1, 1);
+                    ActorManager.Singleton.Spawn<ClosedDoor>(position.x, position.y, "stoneObstacle", "stoneObstacle", 1, 1, 1);
                     break;
                 case '1':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "stoneWallLeftCorner", "stoneWallLeftCorner");
@@ -219,11 +223,11 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
                 case '=':
-                    ActorManager.Singleton.Spawn<Door>(position);
+                    ActorManager.Singleton.Spawn<NextMapDoor>(position);
                     break;
                 case 'i':
                     ActorManager.Singleton.Spawn<Weapon>(position);
-                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    ActorManager.Singleton.Spawn<Floor>(position);
                     break;
                 case '|':
                     ActorManager.Singleton.Spawn<Shield>(position);
@@ -258,6 +262,10 @@ namespace DungeonCrawl.Core
                 case 'O':
                     ActorManager.Singleton.Spawn<Mummy>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+                case 'E':
+                    ActorManager.Singleton.Spawn<ChristmasTree>(position);
+                    ActorManager.Singleton.Spawn<Floor>(position);
                     break;
                 case '0':
                     ActorManager.Singleton.Spawn<Healer>(position);

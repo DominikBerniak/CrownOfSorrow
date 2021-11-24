@@ -43,6 +43,7 @@ namespace DungeonCrawl.Actors.Characters
 
         protected override void OnDeath()
         {
+            DropItem();
             Debug.Log("Wooooooo...");
         }
 

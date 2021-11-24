@@ -1,4 +1,5 @@
-﻿using DungeonCrawl.Actors.Experience;
+﻿using System;
+using DungeonCrawl.Actors.Experience;
 using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
@@ -33,16 +34,49 @@ namespace DungeonCrawl.Actors.Characters
 
         public Equipment Equipment = new Equipment();
 
-
         public void ApplyDamage(int damage)
         {
-            CurrentHealth -= damage;
-
+            int calculatedDmg = 2 * ((int)Math.Pow(damage, 2)) / (damage + Armor);
+            CurrentHealth -= (calculatedDmg > damage? damage : calculatedDmg);
+            if (this is Player)
+            {
+                AudioManager.Singleton.PlayPlayerHitSound();
+            }
+            else
+            {
+                AudioManager.Singleton.PlayMonsterHitSound();
+            }
             if (CurrentHealth <= 0)
             {
-                // Die
                 OnDeath();
                 ActorManager.Singleton.DestroyActor(this);
+            }
+        }
+        public void DropItem()
+        {
+            switch (Equipment.GetRandomItemType())
+            {
+                case Equipment.ItemTypes.Helmet:
+                    ActorManager.Singleton.Spawn<Helmet>(Position);
+                    break;
+                case Equipment.ItemTypes.Chest:
+                    ActorManager.Singleton.Spawn<ChestArmor>(Position);
+                    break;
+                case Equipment.ItemTypes.Gloves:
+                    ActorManager.Singleton.Spawn<Gloves>(Position);
+                    break;
+                case Equipment.ItemTypes.Boots:
+                    ActorManager.Singleton.Spawn<Boots>(Position);
+                    break;
+                case Equipment.ItemTypes.Weapon:
+                    ActorManager.Singleton.Spawn<Weapon>(Position);
+                    break;
+                case Equipment.ItemTypes.Shield:
+                    ActorManager.Singleton.Spawn<Shield>(Position);
+                    break;
+                case Equipment.ItemTypes.Consumable:
+                    ActorManager.Singleton.Spawn<Consumable>(Position);
+                    break;
             }
         }
 

@@ -19,7 +19,7 @@ namespace DungeonCrawl.Actors
         
         private (int x, int y) _position;
         private SpriteRenderer _spriteRenderer;
-        public bool IsDestroyable { get; set; } = true;
+        public bool IsDestructible { get; set; } = true;
         
         private void Awake()
         {

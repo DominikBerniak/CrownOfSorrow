@@ -1,9 +1,11 @@
-﻿using DungeonCrawl;
+﻿using System;
+using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Core;
 using Source.Core;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Source.Core
@@ -67,7 +69,11 @@ namespace Assets.Source.Core
         
         public bool IsFightScreenOn;
 
+        public bool IsPauseMenuOn;
+
         private TextMeshProUGUI[] _textComponents;
+
+        public GameObject PauseMenu;
         
 
         private void Awake()
@@ -218,6 +224,8 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
             if (player.CurrentHealth <= 0)
             {
                 fightResultMessage.GetComponent<TextMeshProUGUI>().text = $"DEFEAT!\n You have been defeated by {monster.Name}";
+                AudioManager.Singleton.StopBackgroundMusic();
+                AudioManager.Singleton.PlayGameOverSound();
             }
             else
             {
@@ -249,6 +257,37 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
         public void HideUseItemUi()
         {
             usableItemsGrid.SetActive(false);
+        }
+
+        public void TogglePauseMenu()
+        {
+            if (!PauseMenu.activeSelf)
+            {
+                PauseControl.Singleton.PauseGame();
+                PauseMenu.SetActive(true);
+                IsPauseMenuOn = true;
+                return;
+            }
+            PauseControl.Singleton.ResumeGame();
+            PauseMenu.SetActive(false);
+            IsPauseMenuOn = false;
+        }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
+
+        public void MainMenu()
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        public void MuteSound()
+        {
+            var muteTextObject = PauseMenu.transform.Find("MuteSoundButton").GetComponentInChildren<TextMeshProUGUI>();
+            muteTextObject.text = muteTextObject.text == "MUTE SOUND" ? "UNMUTE SOUND" : "MUTE SOUND";
+            AudioManager.Singleton.ToggleSoundMute();
         }
     }
 }

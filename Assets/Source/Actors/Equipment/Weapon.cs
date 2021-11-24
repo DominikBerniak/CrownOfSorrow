@@ -1,26 +1,24 @@
 ﻿using System.Collections.Generic;
+using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Weapon : Item
     {
-        private List<string> Names = new List<string>()
-        {
-            "Great Sword of Power", "Long Sword", "Sword", "Great Sword", "One Sword To Rule Them All", "Excalibur"
-        };
+        private string[] _typeNames = {"Long Sword", "Sword", "Zweihänder", "Broad Sword", "Claymore", "Rapier", "Katana", "Sabre", "Scimitar"};
 
-        private List<int> SpriteIds = new List<int>()
-        {
+        private int[] _spriteIds = {
             319, 320, 321, 322, 323, 367, 368, 369, 370, 371,
             415, 416, 417, 418, 419
         };
 
         public Weapon()
         {
-            Name = Names[Utilities.Random.Next(Names.Count)];
+            var typeName = _typeNames[Utilities.Random.Next(_typeNames.Length)];
+            Name = RandomNameGenerator.Singleton.GenerateName(typeName);
             StatName = "Attack";
             StatPower = Utilities.Random.Next(1, 16);
-            DefaultSpriteId = SpriteIds[Utilities.Random.Next(SpriteIds.Count)];
+            DefaultSpriteId = _spriteIds[Utilities.Random.Next(_spriteIds.Length)];
         }
         public override void UseItem()
         {
@@ -32,6 +30,7 @@ namespace DungeonCrawl.Actors.Characters
                 }
                 Owner.Equipment.EquippedWeapon = this;
                 Owner.Equipment.RemoveItem(this);
+                AudioManager.Singleton.PlayWeaponEquippedSound();
             }
             else
             {
