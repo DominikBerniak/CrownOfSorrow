@@ -29,6 +29,7 @@ namespace DungeonCrawl.Actors.Characters
         public int Armor { get; set; }
 
         public Level Level { get; set; } = new Level();
+        public Exp Experience { get; set; } = new Exp();
 
         public Equipment Equipment = new Equipment();
 
@@ -41,7 +42,6 @@ namespace DungeonCrawl.Actors.Characters
             {
                 // Die
                 OnDeath();
-
                 ActorManager.Singleton.DestroyActor(this);
             }
         }

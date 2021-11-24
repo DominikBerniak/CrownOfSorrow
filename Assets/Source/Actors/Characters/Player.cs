@@ -19,7 +19,6 @@ namespace DungeonCrawl.Actors.Characters
 
         private int _baseAttackDmg;
 
-
         public override int DefaultSpriteId { get; set; } = 26;
         public override string DefaultName => "Player";
 
@@ -27,7 +26,8 @@ namespace DungeonCrawl.Actors.Characters
         public Player()
         {
             Name = ActorManager.Singleton.PlayerName;
-            Level.Number = 1;
+            Level.Number = 0;
+            Experience.ExperiencePoints = 0;
             MaxHealth = 100;
             CurrentHealth = MaxHealth;
             _baseAttackDmg = Utilities.Random.Next(5, 11);
@@ -116,10 +116,17 @@ namespace DungeonCrawl.Actors.Characters
 
         public override bool OnCollision(Actor anotherActor)
         {
+            
+            Level.IfLevelUp(this.Experience,this);
+            Level.GuesWhoAndChangeLevel(this,anotherActor);
+            this.Experience.SetExperiencePoints(anotherActor);     
             UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
+            this.Experience.DropExperience(this,anotherActor);
+            Level.IfLevelUp(this.Experience,this);
             return CurrentHealth <= 0;
         }
 
+         
         protected override void OnDeath()
         {
         }
