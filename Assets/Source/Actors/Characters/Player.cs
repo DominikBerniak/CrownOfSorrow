@@ -128,7 +128,10 @@ namespace DungeonCrawl.Actors.Characters
 
         public override bool OnCollision(Actor anotherActor)
         {
-            
+            if(IsChristmasTreeEquipped())
+            {
+              return true;
+            }
             Level.IfLevelUp(this.Experience,this);
             Level.GuesWhoAndChangeLevel(this,anotherActor);
             this.Experience.SetExperiencePoints(anotherActor);     
@@ -136,6 +139,7 @@ namespace DungeonCrawl.Actors.Characters
             this.Experience.DropExperience(this,anotherActor);
             Level.IfLevelUp(this.Experience,this);
             return CurrentHealth <= 0;
+           
         }
 
          
