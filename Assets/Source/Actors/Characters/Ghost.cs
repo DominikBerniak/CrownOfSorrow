@@ -32,6 +32,10 @@ namespace DungeonCrawl.Actors.Characters
         {                       
             if (anotherActor is Player player)
             {  
+                if (player.IsChristmasTreeEquipped())
+                {
+                    return true;
+                }
                 Level.IfLevelUp(this.Experience,player);
                 Level.GuesWhoAndChangeLevel(player,this);
                 this.Experience.SetExperiencePoints(this);              
