@@ -44,8 +44,6 @@ namespace DungeonCrawl.Actors.Experience
                 ghost.Experience.ExperiencePoints += ghost.Experience.ExperiencePoints;
             }
         }
-        
-                     
-        
+
     }
 }

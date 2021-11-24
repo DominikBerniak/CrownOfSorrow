@@ -26,6 +26,27 @@ namespace DungeonCrawl.Actors.Characters
         }
         protected override void OnDeath() { }
 
+        public void ExchangeExp(Player player)
+        {
+            if(player.Experience.ExperiencePoints >= 10)
+            {
+                if(player.CurrentHealth < player.MaxHealth)
+                {
+                     player.Experience.ExperiencePoints -= 10;
+                     player.CurrentHealth += 20;
+                }   
+                else
+                {
+                    Debug.Log("Your wounds are healed...Come back later...")
+                }
+            }
+            else
+            {
+                Debug.Log("Sorry, You have nothing to exchange....")
+            }
+                
+        }
+
 
 
         public override int DefaultSpriteId { get; set; } = 78;
