@@ -23,14 +23,17 @@ namespace DungeonCrawl.Actors.Characters
             {
                 if (Owner.Equipment.IsShieldEquipped())
                 {
+                    Owner.Equipment.EquippedShield.IsEquipped = false;
                     Owner.Equipment.AddItem(Owner.Equipment.EquippedShield);    
                 }
                 Owner.Equipment.EquippedShield = this;
                 Owner.Equipment.RemoveItem(this);
+                IsEquipped = true;
                 AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {
+                IsEquipped = false;
                 Owner.Equipment.EquippedShield = null;
                 Owner.Equipment.AddItem(this);
             }

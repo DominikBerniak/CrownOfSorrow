@@ -8,10 +8,9 @@ namespace DungeonCrawl.Actors.Characters
     {
         public string Name { get; set; }
         public int MaxHealth { get; set; }
-        public int _currentHealth;
+        private int _currentHealth;
         public int CurrentHealth
         {
-
             get { return _currentHealth; }
 
             set

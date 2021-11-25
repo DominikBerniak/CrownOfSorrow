@@ -11,13 +11,13 @@ namespace DungeonCrawl.Actors.Characters
         public int StatPower { get; set; }
         public virtual void UseItem(){}
 
-        public Character Owner { get; private set; }
+        public Character Owner { get; set; }
+        public bool IsEquipped;
 
         public override bool OnCollision(Actor anotherActor)
         {
-            if (anotherActor is Player)
+            if (anotherActor is Player player)
             {
-                Player player = (Player) anotherActor;
                 if (player.Equipment.Items.Count == 24)
                 {
                     return false;

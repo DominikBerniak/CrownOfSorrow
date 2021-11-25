@@ -18,7 +18,7 @@ namespace DungeonCrawl.Actors.Characters
 
         public Mummy()
         {
-            Level.Number = 0;
+            Level.Number = 1;
             Experience.ExperiencePoints = 0;
             Name = Names[Utilities.Random.Next(Names.Count)];
             MaxHealth = Utilities.Random.Next(10, 51);

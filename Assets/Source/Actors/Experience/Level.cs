@@ -4,9 +4,9 @@ namespace DungeonCrawl.Actors.Experience
 {
     public class Level
     {
-        public int Number { get; set; } = 0;
+        public int Number { get; set; } = 1;
 
-        public List<int> Levels = new List<int>() {100,200,300,500,800,1300,2100};
+        public List<int> Levels = new List<int>() {0,100,200,300,500,800,1300,2100};
 
         public void IfLevelUp(Exp experience,Player player)
         {

@@ -15,9 +15,16 @@ namespace DungeonCrawl.Core
         /// <summary>
         ///     Constructs map from txt file and spawns actors at appropriate positions
         /// </summary>
-        public static void LoadMap()
+        public static void LoadMap(bool isAfterLoadGame = false)
         {
-            ActorManager.Singleton.DestroyAllDestructibleActors();
+            if (isAfterLoadGame)
+            {
+                ActorManager.Singleton.DestroyAllActors();
+            }
+            else
+            {
+                ActorManager.Singleton.DestroyAllDestructibleActors();    
+            }
             if (!AudioManager.Singleton.IsMusicPlaying())
             {
                 AudioManager.Singleton.PlayBackgroundMusic();    

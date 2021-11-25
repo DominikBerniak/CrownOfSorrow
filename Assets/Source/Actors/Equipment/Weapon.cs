@@ -26,14 +26,17 @@ namespace DungeonCrawl.Actors.Characters
             {
                 if (Owner.Equipment.IsWeaponEquipped())
                 {
+                    Owner.Equipment.EquippedWeapon.IsEquipped = false;
                     Owner.Equipment.AddItem(Owner.Equipment.EquippedWeapon);    
                 }
                 Owner.Equipment.EquippedWeapon = this;
                 Owner.Equipment.RemoveItem(this);
+                IsEquipped = true;
                 AudioManager.Singleton.PlayWeaponEquippedSound();
             }
             else
             {
+                IsEquipped = false;
                 Owner.Equipment.EquippedWeapon = null;
                 Owner.Equipment.AddItem(this);
             }

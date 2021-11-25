@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using DungeonCrawl;
 using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Core;
+using DungeonCrawl.DAO;
 using Source.Core;
 using TMPro;
 using UnityEngine;
@@ -15,19 +17,6 @@ namespace Assets.Source.Core
     /// </summary>
     public class UserInterface : MonoBehaviour
     {
-        public enum TextPosition : byte
-        {
-            TopLeft,
-            TopCenter,
-            TopRight,
-            MiddleLeft,
-            MiddleCenter,
-            MiddleRight,
-            BottomLeft,
-            BottomCenter,
-            BottomRight
-        }
-
         /// <summary>
         ///     User Interface singleton
         /// </summary>
@@ -71,9 +60,15 @@ namespace Assets.Source.Core
 
         public bool IsPauseMenuOn;
 
-        private TextMeshProUGUI[] _textComponents;
-
         public GameObject PauseMenu;
+
+        public GameObject GameMessage;
+
+        private float _timeElapsed;
+
+        private bool _gameMessageDisplayed;
+
+        private string _gameMessageText;
         
 
         private void Awake()
@@ -85,20 +80,9 @@ namespace Assets.Source.Core
             }
             
             Singleton = this;
-
+            _timeElapsed = 0;
             equipmentSlots = equipmentGrid.GetComponentsInChildren<EquipmentItemSlot>();
             usableItems = usableItemsGrid.GetComponentsInChildren<EquipmentItemSlot>();
-            _textComponents = GetComponentsInChildren<TextMeshProUGUI>();
-        }
-
-        /// <summary>
-        ///     Changes text at given screen position
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="textPosition"></param>
-        public void SetText(string text, TextPosition textPosition)
-        {
-            _textComponents[(int) textPosition].text = text;
         }
 
         public void ShowFightScreen(Player player, Character monster)
@@ -266,6 +250,9 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
                 PauseControl.Singleton.PauseGame();
                 PauseMenu.SetActive(true);
                 IsPauseMenuOn = true;
+                Button loadGameButton = PauseMenu.transform.Find("LoadGameButton").GetComponent<Button>();
+                string loadFilePath = Directory.GetCurrentDirectory() + "/SavedGames/game_save.json";
+                loadGameButton.interactable = File.Exists(loadFilePath);
                 return;
             }
             PauseControl.Singleton.ResumeGame();
@@ -288,6 +275,58 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
             var muteTextObject = PauseMenu.transform.Find("MuteSoundButton").GetComponentInChildren<TextMeshProUGUI>();
             muteTextObject.text = muteTextObject.text == "MUTE SOUND" ? "UNMUTE SOUND" : "MUTE SOUND";
             AudioManager.Singleton.ToggleSoundMute();
+        }
+
+        public void ResetEquipmentUi()
+        {
+            foreach (var itemSlot in equipmentSlots)
+            {
+                itemSlot.ClearSlot();
+            }
+            equippedWeapon.ClearSlot();
+            equippedShield.ClearSlot();
+            equippedHelmet.ClearSlot();
+            equippedChestArmor.ClearSlot();
+            equippedGloves.ClearSlot();
+            equippedBoots.ClearSlot();
+            foreach (var itemSlot in usableItems)
+            {
+                itemSlot.ClearSlot();
+            }
+        }
+
+        public void SaveGame()
+        {
+            SaveManager.SaveGame();
+            Button loadGameButton = PauseMenu.transform.Find("LoadGameButton").GetComponent<Button>();
+            loadGameButton.interactable = true;
+            DisplayGameMessage("Game Successfully Saved");
+        }
+        public void LoadGame()
+        {
+            SaveManager.LoadGame();
+            DisplayGameMessage("Game Successfully Loaded");
+        }
+
+        public void DisplayGameMessage(string message)
+        {
+            _gameMessageDisplayed = true;
+            GameMessage.SetActive(true);
+            GameMessage.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        }
+
+        public void Update()
+        {
+            if (_gameMessageDisplayed)
+            {
+                _timeElapsed += Time.deltaTime;
+                if (_timeElapsed > 2)
+                {
+                    _gameMessageDisplayed = false;
+                    GameMessage.SetActive(false);
+                    _timeElapsed = 0;
+                }
+            }
         }
     }
 }
