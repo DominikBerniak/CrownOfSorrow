@@ -37,12 +37,12 @@ namespace DungeonCrawl.Actors.Characters
                 }   
                 else
                 {
-                    Debug.Log("Your wounds are healed...Come back later...")
+                    Debug.Log("Your wounds are healed...Come back later...");
                 }
             }
             else
             {
-                Debug.Log("Sorry, You have nothing to exchange....")
+                Debug.Log("Sorry, You have nothing to exchange....");
             }
                 
         }
