@@ -17,8 +17,7 @@ namespace DungeonCrawl.Actors.Static
             {"stoneWallLeftDownCorner", 113}, {"stoneWallLeftDown", 114}, {"stoneWallRightDownCorner", 115}, {"candle", 724}, {"tower", 1002}, 
             {"redroof1", 580}, {"redroof2", 581}, {"redroof3", 582}, {"redWall", 628}, {"stoneWallRight", 67}, {"candle1", 631}, 
             {"greenLeftUpCorner", 767}, {"greenRightUpCorner", 769}, {"greenLeftDownCorner", 863}, {"greenRightDownCorner", 865},
-            {"greenLeft", 815 }, {"greenRight", 817 }, {"greenUp", 768}, {"greenDown", 864}, 
-            {"houseDoor", 778}, {"houseWall", 777}, {"closedDoor", 146},{"houseWall1", 779}
+            {"greenLeft", 815 }, {"greenRight", 817 }, {"closedDoor", 146}, {"greenUp", 768}, {"greenDown", 864}, {"houseDoor", 778}, {"houseWall", 777}, {"houseWall1", 779},{"boat",921}
         };
 
         public override void SetSprite(Dictionary<string, int> variants, string key)

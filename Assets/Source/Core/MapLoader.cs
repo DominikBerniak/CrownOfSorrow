@@ -11,7 +11,7 @@ namespace DungeonCrawl.Core
     /// </summary>
     public static class MapLoader
     {
-        public static int CurrentMapId { get; set; } = 1;
+        public static int CurrentMapId { get; set; } = 3;
         /// <summary>
         ///     Constructs map from txt file and spawns actors at appropriate positions
         /// </summary>
@@ -66,11 +66,15 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "water", "Water");
                     break;
                 case 'Y':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tree", "tree");
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tree", "tree");                  
                     break;
                 case 'o' :
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "necklace", "necklace");
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "grass", "grass",1);
+                    break;
+                case 'M':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "grass", "grass",1);
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tree", "tree");    
                     break;
                 case 'N':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "fence", "fence");
@@ -94,9 +98,11 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "houseWall1", "houseWall1");
                     break;
                 case 't':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tombstone", "tombstone");
                     break;
                 case 'f':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "fireplace", "fireplace");                  
                     break;
                 case '<':
@@ -108,9 +114,6 @@ namespace DungeonCrawl.Core
                 case 'X':
                     ActorManager.Singleton.Spawn<ClosedDoor>(position.x, position.y, "redDoor", "redDoor", 1, 1, 1);
                     break;
-                case 'M':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crown", "crown");
-                    break;
                 case 'w':
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "verticalRoad1", "verticalRoad1", 1);
                     break;
@@ -118,9 +121,11 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "verticalRoad2", "verticalRoad2", 1);
                     break;
                 case 'H':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crossUp", "crossUp");
                     break;
                 case 'h':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "crossDown", "crossDown");
                     break;
                 case 'b':
@@ -154,11 +159,18 @@ namespace DungeonCrawl.Core
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "stoneWallRight", "stoneWallRight");
                     break;
                 case 'U':
-                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "candle", "candle");
+                    if(CurrentMapId != 3)
+                    {
+                        ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                        ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "candle", "candle");
+                    }
+                    else
+                    {
+                        ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "candle", "candle");
+                    }                 
                     break;
                 case 'u':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "candle1", "candle1");
-                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
                     break;
                 case 'T':
                     ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "tower", "tower");
@@ -280,6 +292,11 @@ namespace DungeonCrawl.Core
                 case '0':
                     ActorManager.Singleton.Spawn<Healer>(position);
                     ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "floor", "floor", 1);
+                    break;
+                case 'n':
+                    ActorManager.Singleton.Spawn<Floor>(position.x, position.y, "water", "water",1);
+                    ActorManager.Singleton.Spawn<Wall>(position.x, position.y, "boat", "boat");
+                    
                     break;
 
                 default:
