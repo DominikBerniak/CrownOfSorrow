@@ -1,4 +1,6 @@
+using System.IO;
 using DungeonCrawl.Core;
+using DungeonCrawl.DAO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +10,8 @@ public class Menu : MonoBehaviour
 {
     public Button StartGameButton;
 
+    public Button LoadGameButton;
+    
     public Button QuitGameButton;
 
     public GameObject PlayerNameUi;
@@ -19,13 +23,23 @@ public class Menu : MonoBehaviour
         _musicGameObject = new GameObject("BackgroundMusic");
         _musicAudioSource = _musicGameObject.AddComponent<AudioSource>();
         PlayMainMenuMusic();
+        string loadFilePath = Directory.GetCurrentDirectory() + "/SavedGames/game_save.json";
+        LoadGameButton.interactable = File.Exists(loadFilePath);
+        LoadGameButton.GetComponentInChildren<TextMeshProUGUI>().enableVertexGradient = File.Exists(loadFilePath);
     }
 
-    public void StartGame()
+    public void NewGame()
     {
         StartGameButton.gameObject.SetActive(false);
         QuitGameButton.gameObject.SetActive(false);
+        LoadGameButton.gameObject.SetActive(false);
         PlayerNameUi.SetActive(true);
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene(1);
+        PlayerPrefs.SetString("gameStatus", "loadedGame");
     }
 
     public void QuitGame()
@@ -37,7 +51,16 @@ public class Menu : MonoBehaviour
     {
         string playerName = GameObject.Find("UserNameInput").GetComponent<TextMeshProUGUI>().text;
         PlayerPrefs.SetString("playerName", playerName);
+        PlayerPrefs.SetString("gameStatus", "newGame");
         SceneManager.LoadScene(1);
+    }
+
+    public void GoBack()
+    {
+        StartGameButton.gameObject.SetActive(true);
+        QuitGameButton.gameObject.SetActive(true);
+        LoadGameButton.gameObject.SetActive(true);
+        PlayerNameUi.SetActive(false);
     }
     
     public void PlayMainMenuMusic()

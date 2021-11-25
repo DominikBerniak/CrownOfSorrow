@@ -38,6 +38,35 @@ namespace DungeonCrawl.Core
             PlayerName = PlayerPrefs.GetString("playerName");
         }
 
+        public List<Character> GetAllCharacters()
+        {
+            List<Character> allCharacters = new List<Character>();
+            foreach (var actor in _allActors)
+            {
+                if (actor is Character)
+                {
+                    allCharacters.Add((Character)actor);
+                }
+            }
+            return allCharacters;
+        }
+
+        public List<Item> GetAllItems()
+        {
+            List<Item> allItems = new List<Item>();
+            foreach (var actor in _allActors)
+            {
+                if (actor is Item)
+                {
+                    allItems.Add((Item)actor);
+                }
+            }
+            return allItems;
+        }
+        public Player GetPlayer()
+        {
+            return (Player)_allActors.First(actor => actor is Player);
+        }
         /// <summary>
         ///     Returns actor present at given position (returns null if no actor is present)
         /// </summary>
@@ -85,6 +114,15 @@ namespace DungeonCrawl.Core
             }
         }
 
+        public void DestroyAllActors()
+        {
+            var actors = _allActors.ToArray();
+
+            foreach (var actor in actors)
+            {
+                DestroyActor(actor);
+            }
+        }
         /// <summary>
         ///     Returns sprite with given ID
         /// </summary>

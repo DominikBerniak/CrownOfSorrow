@@ -23,16 +23,19 @@ namespace DungeonCrawl.Actors.Characters
             {
                 if (Owner.Equipment.AreBootsEquipped())
                 {
+                    Owner.Equipment.EquippedBoots.IsEquipped = false;
                     Owner.Equipment.AddItem(Owner.Equipment.EquippedBoots);    
                 }
                 Owner.Equipment.EquippedBoots = this;
                 Owner.Equipment.RemoveItem(this);
+                IsEquipped = true;
                 AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {
                 Owner.Equipment.EquippedBoots = null;
                 Owner.Equipment.AddItem(this);
+                IsEquipped = false;
             }
         }
         

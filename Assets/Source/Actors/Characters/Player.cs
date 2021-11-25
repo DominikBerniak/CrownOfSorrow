@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using Assets.Source.Core;
 using DungeonCrawl.Actors.Experience;
 using DungeonCrawl.Core;
+using DungeonCrawl.DAO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,20 +11,12 @@ namespace DungeonCrawl.Actors.Characters
 {
     public class Player : Character
     {
-        public (int, int) _targetPosition;
+        public int baseArmor;
 
-        private bool _isMoving;
-
-        private float _timeSinceLastMove;
-
-        private int _baseArmor;
-
-        private int _baseAttackDmg;
-
+        public int baseAttackDmg;
 
         public override int DefaultSpriteId { get; set; } = 26;
         public override string DefaultName => "Player";
-
 
         public Player()
         {
@@ -30,8 +24,8 @@ namespace DungeonCrawl.Actors.Characters
             Level.Number = 1;
             MaxHealth = 100;
             CurrentHealth = MaxHealth;
-            _baseAttackDmg = Utilities.Random.Next(5, 11);
-            _baseArmor = 0;
+            baseAttackDmg = Utilities.Random.Next(5, 11);
+            baseArmor = 0;
             IsDestructible = false;
         }
 
@@ -85,14 +79,14 @@ namespace DungeonCrawl.Actors.Characters
             if (Input.GetKeyDown(KeyCode.Home))
             {
                 CurrentHealth = MaxHealth;
-                _baseAttackDmg = 100;
+                baseAttackDmg = 100;
             }
             
             if (Input.GetKeyDown(KeyCode.End))
             {
                 CurrentHealth = 1;
             }
-
+            
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
             UserInterface.Singleton.UpdatePlayerInfo(this);
@@ -100,8 +94,8 @@ namespace DungeonCrawl.Actors.Characters
 
         public void UpdatePlayerStats()
         {
-            AttackDmg = _baseAttackDmg + Equipment.GetEquippedWeaponPower();
-            Armor = _baseArmor + Equipment.GetEquippedArmorPower();
+            AttackDmg = baseAttackDmg + Equipment.GetEquippedWeaponPower();
+            Armor = baseArmor + Equipment.GetEquippedArmorPower();
         }
 
         private void UpdatePlayerSprite()

@@ -24,6 +24,7 @@ namespace DungeonCrawl.Actors.Characters
             {
                 if (Owner.Equipment.IsChestArmorEquipped())
                 {
+                    Owner.Equipment.EquippedChestArmor.IsEquipped = false;
                     Owner.Equipment.AddItem(Owner.Equipment.EquippedChestArmor);    
                 }
 
@@ -33,12 +34,14 @@ namespace DungeonCrawl.Actors.Characters
                 }
                 Owner.Equipment.EquippedChestArmor = this;
                 Owner.Equipment.RemoveItem(this);
+                IsEquipped = true;
                 AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {
                 Owner.Equipment.EquippedChestArmor = null;
                 Owner.Equipment.AddItem(this);
+                IsEquipped = false;
             }
         }
         

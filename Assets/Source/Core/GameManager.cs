@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DungeonCrawl.DAO;
+using UnityEngine;
 
 namespace DungeonCrawl.Core
 {
@@ -9,7 +10,16 @@ namespace DungeonCrawl.Core
     {
         private void Start()
         {
-            MapLoader.LoadMap();
+            string gameStatus = PlayerPrefs.GetString("gameStatus");
+            switch (gameStatus)
+            {
+                case "newGame":
+                    MapLoader.LoadMap();
+                    break;
+                case "loadedGame":
+                    SaveManager.LoadGame();
+                    break;
+            }
         }
     }
 }

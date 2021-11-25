@@ -23,14 +23,17 @@ namespace DungeonCrawl.Actors.Characters
             {
                 if (Owner.Equipment.IsHelmetEquipped())
                 {
+                    Owner.Equipment.EquippedHelmet.IsEquipped = false;
                     Owner.Equipment.AddItem(Owner.Equipment.EquippedHelmet);    
                 }
                 Owner.Equipment.EquippedHelmet = this;
                 Owner.Equipment.RemoveItem(this);
+                IsEquipped = true;
                 AudioManager.Singleton.PlayArmorEquippedSound();
             }
             else
             {
+                IsEquipped = false;
                 Owner.Equipment.EquippedHelmet = null;
                 Owner.Equipment.AddItem(this);
             }
