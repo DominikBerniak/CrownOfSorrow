@@ -2,6 +2,7 @@
 using UnityEngine;
 using DungeonCrawl.Core;
 using System;
+using DungeonCrawl.Actors.Experience;
 using System.Collections.Generic;
 using DungeonCrawl.Actors.Static;
 
@@ -19,6 +20,7 @@ namespace DungeonCrawl.Actors.Characters
         public Ghost()
         {
             Level.Number = 1;
+            Experience.ExperiencePoints = 0;
             Name = Names[Utilities.Random.Next(Names.Count)];
             MaxHealth = Utilities.Random.Next(10,51);
             CurrentHealth = MaxHealth;
@@ -27,15 +29,20 @@ namespace DungeonCrawl.Actors.Characters
         }
 
         public override bool OnCollision(Actor anotherActor)
-        {
-            if (anotherActor is Player)
-            {
-                Player player = (Player) anotherActor;
+        {                       
+            if (anotherActor is Player player)
+            {  
                 if (player.IsChristmasTreeEquipped())
                 {
                     return true;
                 }
+                Level.IfLevelUp(this.Experience,player);
+                Level.GuesWhoAndChangeLevel(player,this);
+                this.Experience.SetExperiencePoints(this);              
                 UserInterface.Singleton.ShowFightScreen(player, this);
+                this.Experience.DropExperience(player,this);
+                Level.IfLevelUp(this.Experience,player);
+                return CurrentHealth <= 0;
             }
             return false;
         }
@@ -44,6 +51,7 @@ namespace DungeonCrawl.Actors.Characters
         {
             DropItem();
             Debug.Log("I will hunt You down forever.....");
+            
         }
 
         public (int, int) FindDirection(int ghostX, int ghostY, (int, int) playerLocation)

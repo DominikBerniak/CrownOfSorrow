@@ -2,6 +2,7 @@
 using UnityEngine;
 using DungeonCrawl.Core;
 using System.Collections.Generic;
+using DungeonCrawl.Actors.Experience;
 using Random = UnityEngine.Random;
 
 namespace DungeonCrawl.Actors.Characters
@@ -18,6 +19,7 @@ namespace DungeonCrawl.Actors.Characters
         public Skeleton()
         {
             Level.Number = 1;
+            Experience.ExperiencePoints = 0;
             Name = Names[Utilities.Random.Next(Names.Count)];
             MaxHealth = Utilities.Random.Next(10,51);
             CurrentHealth = MaxHealth;
@@ -26,15 +28,19 @@ namespace DungeonCrawl.Actors.Characters
         }
        public override bool OnCollision(Actor anotherActor)
         {
-            if (anotherActor is Player)
+            if (anotherActor is Player player)
             {
-                Player player = (Player) anotherActor;
                 if (player.IsChristmasTreeEquipped())
                 {
                     return true;
                 }
+                Level.IfLevelUp(this.Experience,player);
+                Level.GuesWhoAndChangeLevel(player,this);
+                this.Experience.SetExperiencePoints(this);              
                 UserInterface.Singleton.ShowFightScreen(player, this);
-                // return CurrentHealth <= 0;
+                this.Experience.DropExperience(player,this);
+                Level.IfLevelUp(this.Experience,player);
+                return CurrentHealth <= 0;
             }
             return false;
         }

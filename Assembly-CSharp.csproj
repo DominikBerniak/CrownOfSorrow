@@ -58,7 +58,6 @@
      <Compile Include="Assets\Source\Actors\Characters\Player.cs" />
      <Compile Include="Assets\Source\DAO\GameData.cs" />
      <Compile Include="Assets\Source\Actors\Experience\Level.cs" />
-     <Compile Include="Assets\Source\Actors\Experience\Expierience.cs" />
      <Compile Include="Assets\Source\Actors\Characters\Character.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\ChristmasTree.cs" />
      <Compile Include="Assets\Source\Actors\Equipment\Gloves.cs" />
@@ -84,6 +83,7 @@
      <Compile Include="Assets\Source\DAO\PlayerData.cs" />
      <Compile Include="Assets\Source\Core\Menu.cs" />
      <Compile Include="Assets\Source\Core\AudioManager.cs" />
+     <Compile Include="Assets\Source\Actors\Experience\Exp.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

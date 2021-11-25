@@ -1,6 +1,7 @@
 ﻿using Assets.Source.Core;
 using UnityEngine;
 using DungeonCrawl.Core;
+using DungeonCrawl.Actors.Experience;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
@@ -24,6 +25,27 @@ namespace DungeonCrawl.Actors.Characters
             return false;
         }
         protected override void OnDeath() { }
+
+        public void ExchangeExp(Player player)
+        {
+            if(player.Experience.ExperiencePoints >= 10)
+            {
+                if(player.CurrentHealth < player.MaxHealth)
+                {
+                     player.Experience.ExperiencePoints -= 10;
+                     player.CurrentHealth += 20;
+                }   
+                else
+                {
+                    Debug.Log("Your wounds are healed...Come back later...");
+                }
+            }
+            else
+            {
+                Debug.Log("Sorry, You have nothing to exchange....");
+            }
+                
+        }
 
 
 

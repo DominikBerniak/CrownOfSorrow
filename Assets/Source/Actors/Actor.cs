@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DungeonCrawl.Core;
+using DungeonCrawl.Actors.Experience;
 using UnityEngine;
 
 namespace DungeonCrawl.Actors

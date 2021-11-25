@@ -22,6 +22,7 @@ namespace DungeonCrawl.Actors.Characters
         {
             Name = ActorManager.Singleton.PlayerName;
             Level.Number = 1;
+            Experience.ExperiencePoints = 0;
             MaxHealth = 100;
             CurrentHealth = MaxHealth;
             baseAttackDmg = Utilities.Random.Next(5, 11);
@@ -126,8 +127,14 @@ namespace DungeonCrawl.Actors.Characters
             {
                 return true;
             }
+            Level.IfLevelUp(this.Experience,this);
+            Level.GuesWhoAndChangeLevel(this,anotherActor);
+            this.Experience.SetExperiencePoints(anotherActor);     
             UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
-            return false;
+            this.Experience.DropExperience(this,anotherActor);
+            Level.IfLevelUp(this.Experience,this);
+            return CurrentHealth <= 0;
+           
         }
 
         protected override void OnDeath()
