@@ -51,7 +51,7 @@ namespace DungeonCrawl.Actors.Characters
             Debug.Log("Wooooooo...");
         }
 
-        public override int DefaultSpriteId { get; set; } = 71;
+        public override int DefaultSpriteId { get; set; } = 317;
         public override string DefaultName => "Mummy";
     }
 }
