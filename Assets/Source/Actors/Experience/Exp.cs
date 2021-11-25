@@ -1,4 +1,6 @@
 ﻿using DungeonCrawl.Actors.Characters;
+using DungeonCrawl.Core;
+
 namespace DungeonCrawl.Actors.Experience
 {
     public class Exp
@@ -9,39 +11,19 @@ namespace DungeonCrawl.Actors.Experience
         {
             ExperiencePoints = 0;
         }
-        public void SetExperiencePoints(Actor monster)
+        public void SetExperiencePoints(Actor actor)
         {
-      
-            if(monster is Skeleton skeleton)
+            if (actor is Character monster)
             {
-                skeleton.Experience.ExperiencePoints =  (skeleton.Level.Levels[skeleton.Level.Number] + 60) * 20 / 100;
+                monster.Experience.ExperiencePoints =  (monster.Level.Levels[monster.Level.Number] + 60) * 20 / 100;
             }
-            if (monster is Mummy mummy)
-            {
-                mummy.Experience.ExperiencePoints = (mummy.Level.Levels[mummy.Level.Number] + 60) * 20 / 100;
-              
-            }
-            if (monster is Ghost ghost)
-            {
-                ghost.Experience.ExperiencePoints = (ghost.Level.Levels[ghost.Level.Number] + 60) * 20 / 100;
-            }
-
         }
-        public void DropExperience(Player player,Actor monster)
+        public void DropExperience(Actor actor)
         {
-
-            if (monster is Skeleton skeleton)
+            Player player = ActorManager.Singleton.GetPlayer();
+            if (actor is Character monster)
             {
-                player.Experience.ExperiencePoints += skeleton.Experience.ExperiencePoints;
-            }
-            if (monster is Mummy mummy)
-            {
-                player.Experience.ExperiencePoints += mummy.Experience.ExperiencePoints;
-
-            }
-            if (monster is Ghost ghost)
-            {
-                ghost.Experience.ExperiencePoints += ghost.Experience.ExperiencePoints;
+                player.Experience.ExperiencePoints += monster.Experience.ExperiencePoints;
             }
         }
 

@@ -17,6 +17,7 @@ namespace DungeonCrawl.DAO
         public EquipmentData Equipment;
         public int DefaultSpriteId;
         public string DefaultName;
+        public int ExpNumber;
         
         [JsonConstructor]
         public PlayerData()
@@ -27,6 +28,7 @@ namespace DungeonCrawl.DAO
             Position = player.Position;
             Name = player.Name;
             LevelNumber = player.Level.Number;
+            ExpNumber = player.Experience.ExperiencePoints;
             MaxHealth = player.MaxHealth;
             CurrentHealth = player.CurrentHealth;
             BaseAttackDmg = player.baseAttackDmg;

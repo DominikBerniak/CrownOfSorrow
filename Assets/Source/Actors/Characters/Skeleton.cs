@@ -21,10 +21,6 @@ namespace DungeonCrawl.Actors.Characters
             Level.Number = 1;
             Experience.ExperiencePoints = 0;
             Name = Names[Utilities.Random.Next(Names.Count)];
-            MaxHealth = Utilities.Random.Next(10,51);
-            CurrentHealth = MaxHealth;
-            AttackDmg = Utilities.Random.Next(5, 16);
-            Armor = Utilities.Random.Next(11);
         }
        public override bool OnCollision(Actor anotherActor)
         {
@@ -34,12 +30,10 @@ namespace DungeonCrawl.Actors.Characters
                 {
                     return true;
                 }
-                Level.IfLevelUp(this.Experience,player);
                 Level.GuesWhoAndChangeLevel(player,this);
-                this.Experience.SetExperiencePoints(this);              
+                Experience.SetExperiencePoints(this);
+                UpdateMonsterStats(player,this);
                 UserInterface.Singleton.ShowFightScreen(player, this);
-                this.Experience.DropExperience(player,this);
-                Level.IfLevelUp(this.Experience,player);
                 return CurrentHealth <= 0;
             }
             return false;
@@ -48,6 +42,7 @@ namespace DungeonCrawl.Actors.Characters
        protected override void OnDeath()
         {
             DropItem();
+            Experience.DropExperience(this);
             Debug.Log("Well, I was already dead anyway...");
         }
 

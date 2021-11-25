@@ -69,6 +69,8 @@ namespace Assets.Source.Core
         private bool _gameMessageDisplayed;
 
         private string _gameMessageText;
+
+        public GameObject HealUi;
         
 
         private void Awake()
@@ -180,10 +182,16 @@ namespace Assets.Source.Core
             GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>().text = player.Name;
             GameObject.Find("PlayerStats").GetComponent<TextMeshProUGUI>().text = 
                 $"Level : {player.Level.Number} | Attack : {player.AttackDmg} | Armor : {player.Armor}";
-            GameObject.Find("PlayerHealthBar").GetComponentInChildren<TextMeshProUGUI>().text = $"{player.CurrentHealth} / {player.MaxHealth}";
-            var healthBar = playerInfo.GetComponentInChildren<Slider>();
-            healthBar.maxValue = player.MaxHealth;
-            healthBar.value = player.CurrentHealth;
+            var healthBar = GameObject.Find("PlayerHealthBar");
+            healthBar.GetComponentInChildren<TextMeshProUGUI>().text = $"{player.CurrentHealth} / {player.MaxHealth}";
+            var healthBarSlider = healthBar.GetComponent<Slider>();
+            healthBarSlider.maxValue = player.MaxHealth;
+            healthBarSlider.value = player.CurrentHealth;
+            
+            var expBarSlider = GameObject.Find("PlayerExpBar").GetComponent<Slider>();
+            expBarSlider.maxValue = player.Level.GetLevelMaxExp();
+            expBarSlider.value = player.Experience.ExperiencePoints;
+            
         }
 
         public void UpdateMonsterInfo(Character monster)
@@ -327,6 +335,51 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
                     _timeElapsed = 0;
                 }
             }
+        }
+
+        public void ShowHealerUi(Healer healer, Player player, int expNeeded, int hpHealed, bool isUpdating = false)
+        {
+            UpdatePlayerInfo(player);
+            if (!isUpdating)
+            {
+                PauseControl.Singleton.PauseGame();
+                HealUi.SetActive(true);
+                HealUi.transform.Find("HealerImage").GetComponentInChildren<Image>().sprite = healer.GetSprite();
+                var healerBackgroundImages = Resources.LoadAll<Sprite>("FightImages");
+                HealUi.GetComponent<Image>().sprite = healerBackgroundImages[Utilities.Random.Next(healerBackgroundImages.Length)];
+            }
+            
+            string message;
+            bool healActive = false;
+            if(player.Experience.ExperiencePoints >= expNeeded)
+            {
+                if(player.CurrentHealth <= player.MaxHealth - hpHealed)
+                {
+                    message =
+                        $"Welcome stranger. If You need healing, {healer.Name} is here for You.\n\nI'll take {expNeeded} experience and heal You for {hpHealed} health.";
+                    healActive = true;
+                }   
+                else
+                {
+                    message="Your wounds are healed...Come back later...";
+                }
+            }
+            else
+            {
+                message = "Sorry, You have nothing to exchange....";
+            }
+            
+            HealUi.transform.Find("HealerNameAndMessage").GetComponent<TextMeshProUGUI>().text =
+                $"{healer.Name}\n\n{message}";
+            Button healButton = HealUi.transform.Find("HealButton").GetComponent<Button>();
+            healButton.interactable = healActive;
+            healButton.onClick.AddListener(() => healer.HealPlayer(player, healButton));
+        }
+        public void HideHealerUi()
+        {
+            HealUi.transform.Find("HealButton").GetComponent<Button>().onClick.RemoveAllListeners();
+            PauseControl.Singleton.ResumeGame();
+            HealUi.SetActive(false);
         }
     }
 }

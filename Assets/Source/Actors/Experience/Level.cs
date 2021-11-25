@@ -8,29 +8,34 @@ namespace DungeonCrawl.Actors.Experience
 
         public List<int> Levels = new List<int>() {0,100,200,300,500,800,1300,2100};
 
-        public void IfLevelUp(Exp experience,Player player)
+        public void LevelUpIfPossible(Player player)
         {
-            if(experience.ExperiencePoints > Levels[Number])
+            if(player.Experience.ExperiencePoints > Levels[Number])
             {
-                player.Level.Number++;
-                experience.ClearPoints();
+                Number++;
+                player.Experience.ClearPoints();
+                player.MaxHealth += player.MaxHealth * 30 / 100;
+                player.CurrentHealth = player.MaxHealth;
             }
         }
 
         public void GuesWhoAndChangeLevel(Player player,Actor actor)
         {
-            if(actor is Ghost ghost)
+            Character character = (Character) actor;
+            int randomLevelModifier = Utilities.Random.Next(-2, 3);
+            if (player.Level.Number < 3)
             {
-                ghost.Level.Number = player.Level.Number;
+                randomLevelModifier = 0;
             }
-            if(actor is Skeleton skeleton)
+            if(character is Ghost || character is Skeleton || character is Mummy)
             {
-                skeleton.Level.Number = player.Level.Number;
+                character.Level.Number = player.Level.Number + randomLevelModifier;
             }
-            if(actor is Mummy mummy)
-            {
-                mummy.Level.Number = player.Level.Number;
-            }
+        }
+
+        public int GetLevelMaxExp()
+        {
+            return Levels[Number];
         }
 
  

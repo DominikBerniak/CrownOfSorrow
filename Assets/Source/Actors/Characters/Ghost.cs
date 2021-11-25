@@ -36,12 +36,10 @@ namespace DungeonCrawl.Actors.Characters
                 {
                     return true;
                 }
-                Level.IfLevelUp(this.Experience,player);
                 Level.GuesWhoAndChangeLevel(player,this);
-                this.Experience.SetExperiencePoints(this);              
+                Experience.SetExperiencePoints(this);
+                UpdateMonsterStats(player,this);
                 UserInterface.Singleton.ShowFightScreen(player, this);
-                this.Experience.DropExperience(player,this);
-                Level.IfLevelUp(this.Experience,player);
                 return CurrentHealth <= 0;
             }
             return false;
@@ -50,8 +48,8 @@ namespace DungeonCrawl.Actors.Characters
         protected override void OnDeath()
         {
             DropItem();
+            Experience.DropExperience(this);
             Debug.Log("I will hunt You down forever.....");
-            
         }
 
         public (int, int) FindDirection(int ghostX, int ghostY, (int, int) playerLocation)

@@ -14,7 +14,7 @@ namespace DungeonCrawl.Actors.Characters
         {
             Name = Names[Utilities.Random.Next(Names.Count)];
             StatName = "Health+";
-            StatPower = 5;
+            StatPower = Utilities.Random.Next(5, 26);
         }
         public override void UseItem()
         {

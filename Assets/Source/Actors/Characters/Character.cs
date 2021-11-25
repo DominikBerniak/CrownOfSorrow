@@ -79,6 +79,20 @@ namespace DungeonCrawl.Actors.Characters
             }
         }
 
+        public void UpdateMonsterStats(Player player, Actor actor)
+        {
+            if (!(actor is Character))
+            {
+                return;
+            }
+            Character monster = (Character) actor;
+            int statModifier = monster.Level.Number * Utilities.Random.Next(0, 2);
+            monster.MaxHealth = Utilities.Random.Next(player.MaxHealth/4,player.MaxHealth/4 + player.CurrentHealth * statModifier/10);
+            monster.CurrentHealth = monster.MaxHealth;
+            monster.AttackDmg = Utilities.Random.Next(statModifier+1, player.AttackDmg);
+            monster.Armor = Utilities.Random.Next(statModifier, player.baseAttackDmg);
+        }
+
         protected abstract void OnDeath();
 
         /// <summary>

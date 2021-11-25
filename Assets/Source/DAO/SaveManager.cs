@@ -56,6 +56,7 @@ namespace DungeonCrawl.DAO
             player.Position = savedPlayer.Position;
             player.Name = savedPlayer.Name;
             player.Level.Number = savedPlayer.LevelNumber;
+            player.Experience.ExperiencePoints = savedPlayer.ExpNumber;
             player.MaxHealth = savedPlayer.MaxHealth;
             player.CurrentHealth = savedPlayer.CurrentHealth;
             player.baseAttackDmg = savedPlayer.BaseAttackDmg;

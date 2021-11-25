@@ -95,6 +95,7 @@ namespace DungeonCrawl.Actors.Characters
 
         public void UpdatePlayerStats()
         {
+            Level.LevelUpIfPossible(this);
             AttackDmg = baseAttackDmg + Equipment.GetEquippedWeaponPower();
             Armor = baseArmor + Equipment.GetEquippedArmorPower();
         }
@@ -127,14 +128,11 @@ namespace DungeonCrawl.Actors.Characters
             {
                 return true;
             }
-            Level.IfLevelUp(this.Experience,this);
             Level.GuesWhoAndChangeLevel(this,anotherActor);
-            this.Experience.SetExperiencePoints(anotherActor);     
+            Experience.SetExperiencePoints(anotherActor);
+            UpdateMonsterStats(this, anotherActor);
             UserInterface.Singleton.ShowFightScreen(this, (Character)anotherActor);
-            this.Experience.DropExperience(this,anotherActor);
-            Level.IfLevelUp(this.Experience,this);
             return CurrentHealth <= 0;
-           
         }
 
         protected override void OnDeath()
