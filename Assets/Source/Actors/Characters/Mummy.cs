@@ -1,19 +1,14 @@
 ﻿using Assets.Source.Core;
 using UnityEngine;
-using DungeonCrawl.Actors.Experience;
-using DungeonCrawl.Core;
 using System.Collections.Generic;
-using Random = UnityEngine.Random;
 
 namespace DungeonCrawl.Actors.Characters
 {
     public class Mummy : Character
     {
-        private float DelayCounter { get; set; }
-
         private List<string> Names = new List<string>()
         {
-            "Scary Spooky Mummy", "Crazy wrapper", "Muuuuuu", "Terrifying Mummy"
+            "Scary Spooky Mummy", "Crazy Wrapper", "Moooo", "Terrifying Mummy"
         };
 
         public Mummy()

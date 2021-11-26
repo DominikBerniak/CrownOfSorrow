@@ -19,6 +19,7 @@ namespace DungeonCrawl.Core
         private AudioClip[] _armorEquippedClips;
         private AudioClip[] _itemPickedUpClips;
         private AudioClip[] _playerDeathClips;
+        private AudioClip[] _fightMusic;
         private float _volume;
         
         
@@ -35,7 +36,7 @@ namespace DungeonCrawl.Core
             _musicAudioSource = _musicGameObject.AddComponent<AudioSource>();
             _soundsGameObject = new GameObject("Sounds");
             _soundsAudioSource = _soundsGameObject.AddComponent<AudioSource>();
-            _musicClips = Resources.LoadAll<AudioClip>("AudioClips/backgroundMusic");
+            _musicClips = Resources.LoadAll<AudioClip>("AudioClips/backgroundMusic/background");
             _playerHitClips = Resources.LoadAll<AudioClip>("AudioClips/playerHit");
             _monsterHitClips = Resources.LoadAll<AudioClip>("AudioClips/monsterHit");
             _elixirDrinkClips = Resources.LoadAll<AudioClip>("AudioClips/elixirDrink");
@@ -43,6 +44,7 @@ namespace DungeonCrawl.Core
             _weaponEquippedClips = Resources.LoadAll<AudioClip>("AudioClips/weaponEquipped");
             _itemPickedUpClips = Resources.LoadAll<AudioClip>("AudioClips/itemPickedUp");
             _playerDeathClips = Resources.LoadAll<AudioClip>("AudioClips/playerDeath");
+            _fightMusic = Resources.LoadAll<AudioClip>("AudioClips/fightMusic");
             _volume = 0.4f;
             _musicAudioSource.loop = true;
         }
@@ -54,15 +56,39 @@ namespace DungeonCrawl.Core
         public void PlayBackgroundMusic()
         {
             _musicAudioSource.Stop();
-            _musicAudioSource.clip = _musicClips[1];
+            _musicAudioSource.clip = _musicClips[Utilities.Random.Next(_musicClips.Length)];
             _musicAudioSource.volume = _volume * 1/6;
             _musicAudioSource.Play();
         }
 
+        public void PlayFightMusic()
+        {
+            _musicAudioSource.Stop();
+            _musicAudioSource.clip = _fightMusic[Utilities.Random.Next(_fightMusic.Length)];
+            _musicAudioSource.volume = _volume * 1/10;
+            _musicAudioSource.Play();
+        }
+
+        public void PlayBossMusic()
+        {
+            _musicAudioSource.Stop();
+            _musicAudioSource.clip = Resources.Load<AudioClip>("AudioClips/bossFight/boss_fight");
+            _musicAudioSource.volume = _volume * 1/10;
+            _musicAudioSource.Play();
+        }
+        
+        public void PlayEndGameMusic()
+        {
+            _musicAudioSource.Stop();
+            _musicAudioSource.clip = Resources.Load<AudioClip>("AudioClips/endGameMusic/end_game");
+            _musicAudioSource.volume = _volume * 1/6;
+            _musicAudioSource.Play();
+        }
         public void PlayChristmasMusic()
         {
             _musicAudioSource.Stop();
             _musicAudioSource.clip = Resources.Load<AudioClip>("AudioClips/backgroundMusic/christmasbells");
+            _musicAudioSource.volume = _volume * 1/6;
             _musicAudioSource.Play();
         }
 

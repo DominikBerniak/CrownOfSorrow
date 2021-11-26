@@ -118,7 +118,7 @@ namespace DungeonCrawl.Actors.Characters
         public ItemTypes GetRandomItemType()
         {
             var randomChance = Utilities.Random.Next(100);
-            if (randomChance >= 35)
+            if (randomChance >= 30)
             {
                 return ItemTypes.Consumable;
             }
@@ -135,7 +135,7 @@ namespace DungeonCrawl.Actors.Characters
             Boots,
             Weapon,
             Shield,
-            Consumable
+            Consumable,
         }
     }
     

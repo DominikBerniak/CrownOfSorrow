@@ -89,7 +89,7 @@ namespace Source.Core
                 }
                 if (currentFighter != player)
                 {
-                    yield return new WaitForSeconds(1);
+                    yield return new WaitForSeconds(0.8f);
                 }
                 if(!isFighting)
                 {
@@ -102,7 +102,7 @@ namespace Source.Core
                     UserInterface.Singleton.UpdateFightScreen(monster, player);
                     if (currentFighter != player)
                     {
-                        yield return new WaitForSeconds(1);
+                        yield return new WaitForSeconds(0.5f);
                     }
                     SwapFighters(ref currentFighter, ref oppositeFighter, player, monster);
                 }

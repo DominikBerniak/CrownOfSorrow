@@ -1,4 +1,5 @@
-﻿using DungeonCrawl.Actors.Characters;
+﻿using Assets.Source.Core;
+using DungeonCrawl.Actors.Characters;
 using DungeonCrawl.Core;
 
 namespace DungeonCrawl.Actors.Static
@@ -12,7 +13,18 @@ namespace DungeonCrawl.Actors.Static
         {
             if (anotherActor is Player)
             {
-                anotherActor.Position = (40, -33);
+                switch (MapLoader.CurrentMapId)
+                {
+                    case 0: case 1000:
+                        anotherActor.Position = (6, -18);
+                        break;
+                    case 1: case 1001:
+                        anotherActor.Position = (41, -33);
+                        break;
+                    case 2: case 1002:
+                        UserInterface.Singleton.ShowEndScreen();
+                        return false;
+                }
                 MapLoader.CurrentMapId = MapLoader.CurrentMapId > 1000 ? MapLoader.CurrentMapId - 1000 + 1 : MapLoader.CurrentMapId+1;
                 MapLoader.LoadMap();
                 ActorManager.Singleton.DestroyActor(this);

@@ -6,7 +6,6 @@ using DungeonCrawl.Actors.Static;
 using DungeonCrawl.Core;
 using Newtonsoft.Json;
 
-
 namespace DungeonCrawl.DAO
 {
     public static class SaveManager

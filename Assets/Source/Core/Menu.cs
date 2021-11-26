@@ -67,7 +67,7 @@ public class Menu : MonoBehaviour
     {
         _musicAudioSource.Stop();
         _musicAudioSource.clip = Resources.Load<AudioClip>("AudioClips/backgroundMusic/main_menu");
-        _musicAudioSource.volume = 0.06f;
+        _musicAudioSource.volume = 0.1f;
         _musicAudioSource.Play();
     }
 }

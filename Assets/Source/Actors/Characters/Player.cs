@@ -15,6 +15,8 @@ namespace DungeonCrawl.Actors.Characters
 
         public int baseAttackDmg;
 
+        private bool isOnDemoMode;
+
         public override int DefaultSpriteId { get; set; } = 26;
         public override string DefaultName => "Player";
 
@@ -28,11 +30,15 @@ namespace DungeonCrawl.Actors.Characters
             baseAttackDmg = Utilities.Random.Next(5, 11);
             baseArmor = 0;
             IsDestructible = false;
+            isOnDemoMode = false;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            UpdatePlayerSprite();
+            if (!isOnDemoMode)
+            {
+                UpdatePlayerSprite();    
+            }
             if (Input.GetKeyDown(KeyCode.Escape) && !UserInterface.Singleton.IsFightScreenOn)
             {
                 UserInterface.Singleton.TogglePauseMenu();
@@ -79,15 +85,29 @@ namespace DungeonCrawl.Actors.Characters
 
             if (Input.GetKeyDown(KeyCode.Home))
             {
+                isOnDemoMode = true;
+                MaxHealth = 999;
                 CurrentHealth = MaxHealth;
                 baseAttackDmg = 100;
+                SetSprite(413);
             }
             
             if (Input.GetKeyDown(KeyCode.End))
             {
+                isOnDemoMode = true;
                 CurrentHealth = 1;
+                baseAttackDmg = 1;
+                SetSprite(364);
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                MaxHealth = 100;
+                CurrentHealth = MaxHealth;
+                baseAttackDmg = Utilities.Random.Next(5, 11);
+                baseArmor = 0;
+                isOnDemoMode = false;
+            }
             CameraController.Singleton.Position = Position;
             UpdatePlayerStats();
             UserInterface.Singleton.UpdatePlayerInfo(this);

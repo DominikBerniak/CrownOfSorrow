@@ -71,6 +71,10 @@ namespace Assets.Source.Core
         private string _gameMessageText;
 
         public GameObject HealUi;
+
+        public GameObject OldManStoryUi;
+
+        public GameObject EndScreen;
         
 
         private void Awake()
@@ -93,12 +97,25 @@ namespace Assets.Source.Core
             PauseControl.Singleton.PauseGame();
             fightUiMain.SetActive(true);
             monsterInfo.SetActive(true);
-            var fightBackgroundImages = Resources.LoadAll<Sprite>("FightImages");
-            fightUiMain.GetComponent<Image>().sprite = fightBackgroundImages[Utilities.Random.Next(fightBackgroundImages.Length)];
+            if (monster.Name != "The Eternal Soul Reaper")
+            {
+                AudioManager.Singleton.PlayFightMusic();
+                var fightBackgroundImages = Resources.LoadAll<Sprite>("FightImages/normalFight");
+                fightUiMain.GetComponent<Image>().sprite = fightBackgroundImages[Utilities.Random.Next(fightBackgroundImages.Length)];
+                monsterImage.SetActive(true);
+                monsterImage.GetComponentInChildren<Image>().sprite = monster.GetSprite();
+            }
+            else
+            {
+                AudioManager.Singleton.PlayBossMusic();
+                fightUiMain.GetComponent<Image>().sprite = Resources.Load<Sprite>("FightImages/boss_fight_background");
+            }
             UpdateFightScreen(monster, player);
-            monsterImage.SetActive(true);
-            monsterImage.GetComponentInChildren<Image>().sprite = monster.GetSprite();
             var leaveButton = GameObject.Find("LeaveButton").GetComponent<Button>();
+            if (monster.Name == "The Eternal Soul Reaper")
+            {
+                leaveButton.gameObject.SetActive(false);
+            }
             var fightButton = GameObject.Find("FightButton").GetComponent<Button>();
             leaveButton.onClick.AddListener(() => Fight.Singleton.TryToRun(leaveButton, fightButton, player, monster));
             fightButton.onClick.AddListener(() => StartCoroutine(Fight.Singleton.FightMonster(leaveButton, fightButton, player, monster)));
@@ -191,7 +208,6 @@ namespace Assets.Source.Core
             var expBarSlider = GameObject.Find("PlayerExpBar").GetComponent<Slider>();
             expBarSlider.maxValue = player.Level.GetLevelMaxExp();
             expBarSlider.value = player.Experience.ExperiencePoints;
-            
         }
 
         public void UpdateMonsterInfo(Character monster)
@@ -202,7 +218,7 @@ namespace Assets.Source.Core
             monsterHealthBarSlider.maxValue = monster.MaxHealth;
             monsterHealthBarSlider.value = monster.CurrentHealth;
             monsterInfo.GetComponent<TextMeshProUGUI>().text = 
-                $@"It's {monster.Name}!
+                $@"{monster.Name}
 
 
 Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {monster.Armor}";
@@ -221,6 +237,7 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
             }
             else
             {
+                AudioManager.Singleton.PlayBackgroundMusic();
                 fightResultMessage.GetComponent<TextMeshProUGUI>().text = $"VICTORY!\n You have defeated {monster.Name}";
             }
         }
@@ -345,7 +362,7 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
                 PauseControl.Singleton.PauseGame();
                 HealUi.SetActive(true);
                 HealUi.transform.Find("HealerImage").GetComponentInChildren<Image>().sprite = healer.GetSprite();
-                var healerBackgroundImages = Resources.LoadAll<Sprite>("FightImages");
+                var healerBackgroundImages = Resources.LoadAll<Sprite>("FightImages/normalFight");
                 HealUi.GetComponent<Image>().sprite = healerBackgroundImages[Utilities.Random.Next(healerBackgroundImages.Length)];
             }
             
@@ -380,6 +397,67 @@ Level : {monster.Level.Number}  |  Attack : {monster.AttackDmg}  |  Armor : {mon
             HealUi.transform.Find("HealButton").GetComponent<Button>().onClick.RemoveAllListeners();
             PauseControl.Singleton.ResumeGame();
             HealUi.SetActive(false);
+        }
+
+        public void ShowOldManStory(Boss oldMan)
+        {
+            OldManStoryUi.SetActive(true);
+            PauseControl.Singleton.PauseGame();
+            if (MapLoader.CurrentMapId == 2 || MapLoader.CurrentMapId == 1002)
+            {
+                OldManStoryUi.GetComponent<Image>().sprite = Resources.Load<Sprite>("bossFightStoryBackground");
+            }
+            OldManStoryUi.transform.Find("OldManImage").GetComponentInChildren<Image>().sprite = oldMan.GetSprite();
+            var storyText = OldManStoryUi.transform.Find("StoryText").GetComponent<TextMeshProUGUI>();
+            storyText.text = oldMan.StoryPages[oldMan.StoryPageNumber];
+            Button button = OldManStoryUi.transform.Find("NextButton").GetComponent<Button>();
+            button.onClick.AddListener(() => NextPageOrHide(oldMan, button, storyText));
+        }
+
+        public void NextPageOrHide(Boss oldMan, Button button, TextMeshProUGUI storyText)
+        {
+            button.onClick.RemoveAllListeners();
+            if (oldMan.StoryPageNumber == 0)
+            {
+                button.GetComponentInChildren<TextMeshProUGUI>().text = "NEXT";
+            }
+            if (oldMan.StoryPageNumber == oldMan.StoryPages.Length-1)
+            {
+                OldManStoryUi.SetActive(false);
+                PauseControl.Singleton.ResumeGame();
+                if (MapLoader.CurrentMapId == 0 || MapLoader.CurrentMapId == 1000)
+                {
+                    oldMan.DropItem();
+                    return;    
+                }
+
+                Player player = ActorManager.Singleton.GetPlayer();
+                oldMan.Name = "The Eternal Soul Reaper";
+                ShowFightScreen(player, oldMan);
+                return;
+            }
+
+            if (oldMan.StoryPageNumber == oldMan.StoryPages.Length-2)
+            {
+                if (MapLoader.CurrentMapId == 0 || MapLoader.CurrentMapId == 1000)
+                {
+                    button.GetComponentInChildren<TextMeshProUGUI>().text = "LEAVE";    
+                }
+                else
+                {
+                    button.GetComponentInChildren<TextMeshProUGUI>().text = "FIGHT";
+                }
+            }
+            oldMan.StoryPageNumber++;
+            storyText.text = oldMan.StoryPages[oldMan.StoryPageNumber];
+            button.onClick.AddListener(() => NextPageOrHide(oldMan, button, storyText));
+        }
+
+        public void ShowEndScreen()
+        {
+            AudioManager.Singleton.PlayEndGameMusic();
+            PauseControl.Singleton.PauseGame();
+            EndScreen.SetActive(true);
         }
     }
 }

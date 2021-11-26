@@ -12,7 +12,8 @@ namespace DungeonCrawl.Actors.Static
         public Dictionary<string, int> SpriteVariants = new Dictionary<string, int>()
         {
             {"floor", 1}, {"water", 247}, {"roadTurn", 240}, {"horizontalRoad", 148},
-            {"verticalRoad1", 239}, {"verticalRoad2", 243}, {"woodenBridge", 780}, {"gateway", 341},{"grass",4},{"boat",441}
+            {"verticalRoad1", 239}, {"verticalRoad2", 243}, {"woodenBridge", 780}, 
+            {"gateway", 341},{"grass",4},{"boat",441}, {"secretTree", 48}
         };
         
         public override void SetSprite(Dictionary<string, int> variants, string key)
